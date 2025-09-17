@@ -1,0 +1,107 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="ListadoBarberos" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="581ec85e-52e3-4cf5-8209-5c88add42c35">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sakila_Adapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<query language="sql"><![CDATA[SELECT nombre_barbero,
+	`id_Barbero`,
+	`edad_Barbero`,
+	email_barbero,
+	usuario_barbero,
+	contrasena_barbero
+FROM barberia_db.barbero]]></query>
+	<field name="nombre_barbero" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_barbero"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_barbero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="barbero"/>
+	</field>
+	<field name="id_Barbero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_Barbero"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_Barbero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="barbero"/>
+	</field>
+	<field name="edad_Barbero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="edad_Barbero"/>
+		<property name="com.jaspersoft.studio.field.label" value="edad_Barbero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="barbero"/>
+	</field>
+	<field name="email_barbero" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="email_barbero"/>
+		<property name="com.jaspersoft.studio.field.label" value="email_barbero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="barbero"/>
+	</field>
+	<field name="usuario_barbero" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="usuario_barbero"/>
+		<property name="com.jaspersoft.studio.field.label" value="usuario_barbero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="barbero"/>
+	</field>
+	<field name="contrasena_barbero" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="contrasena_barbero"/>
+		<property name="com.jaspersoft.studio.field.label" value="contrasena_barbero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="barbero"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="109" splitType="Stretch">
+		<element kind="staticText" uuid="3129e96d-18f8-4630-95e7-a45d13c1e6c1" x="108" y="43" width="434" height="30" fontName="Arial Black" fontSize="19.0" hTextAlign="Center">
+			<text><![CDATA[LISTADO DE BARBEROS]]></text>
+		</element>
+		<element kind="image" uuid="a9b7a50a-a2f4-4370-a292-b2efcb77c0d0" x="11" y="0" width="96" height="109">
+			<expression><![CDATA["C:/Users/HP/Downloads/LOGO.png"]]></expression>
+		</element>
+	</title>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader height="48" splitType="Stretch">
+		<element kind="staticText" uuid="d4e3736f-113e-4e97-8f31-830af69b9e73" x="140" y="30" width="113" height="18" bold="true">
+			<text><![CDATA[Nombres y Apellidos]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="358f3938-145b-43f8-8191-fa2f0bd1b68c"/>
+		</element>
+		<element kind="staticText" uuid="bf2299ae-136b-4a98-b88c-a702d47cbd56" x="8" y="29" width="110" height="18" bold="true">
+			<text><![CDATA[Codigo de Barbero]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f1852865-e4e7-4c08-8ba0-739ed3b73a75"/>
+		</element>
+		<element kind="staticText" uuid="4060047f-9031-4ae2-b806-e3eeaa56028b" x="291" y="28" width="110" height="18" bold="true">
+			<text><![CDATA[Edad]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e98db835-9e64-4003-99e5-f3f787ace27a"/>
+		</element>
+		<element kind="staticText" uuid="924b30e0-fc69-442c-9648-17b392b46cbf" x="420" y="28" width="110" height="18" bold="true">
+			<text><![CDATA[Email]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3254d53f-906c-44fd-9735-683722b91caa"/>
+		</element>
+		<element kind="textField" uuid="c038e675-49ae-4c39-bfd1-fb9947525b45" x="433" y="1" width="100" height="18" pattern="MMMMM dd, yyyy">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+		<element kind="staticText" uuid="daee52dc-4088-442d-916c-a71d6a94659f" x="360" y="1" width="79" height="18" bold="true">
+			<text><![CDATA[Fecha Informe:]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e98db835-9e64-4003-99e5-f3f787ace27a"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<element kind="textField" uuid="84721b59-1d32-4247-8324-a784a49549c4" x="140" y="2" width="113" height="19">
+				<expression><![CDATA[$F{nombre_barbero}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="358f3938-145b-43f8-8191-fa2f0bd1b68c"/>
+			</element>
+			<element kind="textField" uuid="d193c460-ec90-4c61-adf0-d96a923b853a" x="8" y="1" width="110" height="19">
+				<expression><![CDATA[$F{id_Barbero}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f1852865-e4e7-4c08-8ba0-739ed3b73a75"/>
+			</element>
+			<element kind="textField" uuid="75131874-1a2f-4705-80c3-33a4acb67844" x="291" y="0" width="110" height="19">
+				<expression><![CDATA[$F{edad_Barbero}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e98db835-9e64-4003-99e5-f3f787ace27a"/>
+			</element>
+			<element kind="textField" uuid="2661365c-da3e-4f5b-a0b2-b9975f7f9f5e" x="420" y="0" width="110" height="19">
+				<expression><![CDATA[$F{email_barbero}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3254d53f-906c-44fd-9735-683722b91caa"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="42" splitType="Stretch">
+		<element kind="textField" uuid="37635c35-9cb0-459b-b5c4-fa64aeab4ecf" x="352" y="12" width="100" height="30" hTextAlign="Right">
+			<expression><![CDATA["Página " + $V{PAGE_NUMBER}]]></expression>
+		</element>
+		<element kind="textField" uuid="8afb6a71-a56a-4a12-a45e-4fca83d42816" x="452" y="12" width="100" height="30" evaluationTime="Report" hTextAlign="Left">
+			<expression><![CDATA[" de " + $V{PAGE_NUMBER}]]></expression>
+		</element>
+	</pageFooter>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

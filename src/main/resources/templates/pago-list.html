@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Pagos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            background-image: url('/img/barbero1.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+        }
+
+        .main-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            margin-top: 50px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        table {
+            background-color: #fff;
+            color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+
+
+        .btn-custom {
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-radius: 10px;
+        }
+
+        .btn-custom:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .bottom-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+<div class="container main-container">
+    <h1>Listado de Pagos</h1>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered text-center align-middle">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Cita</th>
+                    <th>Monto</th>
+                    <th>Método de Pago</th>
+                    <th>Fecha de Pago</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pago : ${pagoList}">
+                    <td th:text="${pago.idPago}"></td>
+                    <td th:text="${pago.cita.idCita}"></td>
+                    <td th:text="${pago.monto}"></td>
+                    <td th:text="${pago.metodoPago}"></td>
+                    <td th:text="${#temporals.format(pago.fechaPago, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td>
+                        <a th:href="@{/edit-pago/{id}(id=${pago.idPago})}" class="btn btn-sm btn-primary btn-custom">Editar</a>
+                        <a th:href="@{/view-pago/{id}(id=${pago.idPago})}" class="btn btn-sm btn-warning btn-custom">Ver</a>
+                        <a th:href="@{/remove-pago/{id}(id=${pago.idPago})}" class="btn btn-sm btn-danger btn-custom"
+                           onclick="return confirm('¿Está seguro de eliminar este pago?')">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="bottom-btns">
+        <a th:href="@{/new-pago}" class="btn btn-success btn-custom">➕ Nuevo Pago</a>
+        <a th:href="@{/}" class="btn btn-secondary btn-custom">🏠 Volver al Inicio</a>
+    </div>
+</div>
+</body>
+</html>

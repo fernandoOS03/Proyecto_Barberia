@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Títulos dinámicos en el <head> -->
+    <title th:if="${type == 'N'}">Registrar Servicio</title>
+    <title th:if="${type == 'E'}">Editar Servicio</title>
+    <title th:if="${type == 'V'}">Detalle del Servicio</title>
+
+    <!-- Tipografías y Tailwind -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/js/tailwind-config.js}"></script>
+</head>
+<body class="bg-background-primary text-text-primary font-sans flex items-center justify-center min-h-screen p-4">
+
+<div class="bg-background-secondary p-8 rounded-2xl shadow-2xl w-full max-w-2xl">
+
+    <!-- Título visual -->
+    <header class="mb-8 text-center">
+        <h1 class="text-3xl font-bold">
+            <span th:if="${type == 'N'}">Registrar Servicio</span>
+            <span th:if="${type == 'E'}">Editar Servicio</span>
+            <span th:if="${type == 'V'}">Detalle del Servicio</span>
+        </h1>
+    </header>
+
+    <!-- Formulario -->
+    <form th:action="${type == 'N'} ? @{/save-new-servicio} : @{/save-edit-servicio}" th:object="${servicio}" method="post" class="space-y-6">
+
+        <!-- ID -->
+        <div>
+            <label for="idServicio" class="block mb-2 text-sm font-bold text-text-primary/80">Código</label>
+            <input type="text" id="idServicio" th:field="*{idServicio}" readonly
+                   class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 text-text-primary/60 cursor-not-allowed" >
+        </div>
+
+        <!-- Nombre -->
+        <div>
+            <label for="nombreServicio" class="block mb-2 text-sm font-bold text-text-primary/80">Nombre</label>
+            <input type="text" id="nombreServicio" th:field="*{nombreServicio}"
+                   th:readonly="${type.equals('V')}" autofocus
+                   class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
+                   th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+        </div>
+
+        <!-- Precio y Duración -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label for="precioServicio" class="block mb-2 text-sm font-bold text-text-primary/80">Precio</label>
+                <input type="number" step="0.01" id="precioServicio" th:field="*{precioServicio}"
+                       th:readonly="${type.equals('V')}"
+                       class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
+                       th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+            </div>
+            <div>
+                <label for="duracionServicio" class="block mb-2 text-sm font-bold text-text-primary/80">Duración (min)</label>
+                <input type="number" id="duracionServicio" th:field="*{duracionServicio}"
+                       th:readonly="${type.equals('V')}"
+                       class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
+                       th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="flex justify-between items-center pt-4">
+            <button type="submit" th:if="${type != 'V'}"
+                    class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20">
+                Guardar
+            </button>
+            <a th:href="@{/servicio-list}"
+               class="py-2.5 px-6 rounded-lg border border-text-primary/30 text-text-primary/80 font-semibold hover:bg-background-primary hover:border-text-primary/60 transition-all flex items-center">
+                Cancelar
+            </a>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>

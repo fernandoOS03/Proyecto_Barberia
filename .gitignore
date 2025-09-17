@@ -1,0 +1,47 @@
+# --- Archivos de compilación de Java ---
+*.class
+*.jar
+*.war
+*.ear
+
+
+# --- Carpetas generadas por el build ---
+/target/
+/build/
+/out/
+
+
+# --- Archivos de logs ---
+*.log
+
+
+# Eclipse
+.project
+.classpath
+.settings/
+.metadata/
+
+# --- Sistema operativo ---
+.DS_Store
+Thumbs.db
+
+# --- Variables de entorno / credenciales ---
+*.env
+application-*.yml
+application-*.properties
+
+
+# --- Dependencias descargadas ---
+/.gradle/
+/.mvn/wrapper/maven-wrapper.jar
+
+# --- Archivos temporales ---
+*.tmp
+*.swp
+
+# --- Base de datos ---
+# No subir archivos binarios de la BD, solo scripts .sql
+*.db
+*.sqlite
+*.mv.db
+*.h2.db

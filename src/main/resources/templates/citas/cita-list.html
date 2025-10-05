@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Citas</title>
-
-    <!-- 1. Google Fonts: Playfair Display y Lato -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-
-    <!-- 2. Cargar el CDN de Tailwind y la configuración personalizada -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script th:src="@{/js/tailwind-config.js}"></script>
-
-</head>
-<body class="bg-background-primary font-sans">
-
+<div th:fragment="content">
     <!-- Contenedor Principal -->
     <main class="container mx-auto my-10">
         <div class="p-8 md:p-10 rounded-2xl max-w-7xl mx-auto">
@@ -63,16 +45,16 @@
                                     </span>
                                 </td>
                                 <td class="p-4 text-center space-x-4 whitespace-nowrap align-middle">
-                                    <a th:href="@{/edit-cita/{id}(id=${cita.idCita})}" class="inline-block text-text-primary/70 hover:text-brand-accent transition-colors" title="Editar">
+                                    <a th:href="@{/citas/editar/{id}(id=${cita.idCita})}" class="inline-block text-text-primary/70 hover:text-brand-accent transition-colors" title="Editar">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" /></svg>
                                     </a>
-                                    <a th:href="@{/view-cita/{id}(id=${cita.idCita})}" class="inline-block text-text-primary/70 hover:text-blue-400 transition-colors" title="Ver">
+                                    <a th:href="@{/citas/ver/{id}(id=${cita.idCita})}" class="inline-block text-text-primary/70 hover:text-blue-400 transition-colors" title="Ver">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.27 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
                                     </a>
                                     <a href="#"
-								   class="inline-block text-text-primary/70 hover:text-red-500 transition-colors" 
-								   title="Eliminar"
-								   th:onclick="'abrirModalEliminar(' + ${cita.idCita} + ')'" >
+                                   class="inline-block text-text-primary/70 hover:text-red-500 transition-colors" 
+                                   title="Eliminar"
+                                   th:onclick="'abrirModalEliminar(' + ${cita.idCita} + ')'" >
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
                                     </a>
                                 </td>
@@ -84,7 +66,7 @@
     
             <!-- Botones de acción inferiores -->
             <div class="flex justify-between items-center mt-8">
-                <a th:href="@{/new-cita}" class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20">
+                <a th:href="@{/citas/nuevo}" class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20">
                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M17 9a2 2 0 00-2-2h-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v2H5a2 2 0 00-2 2v2a2 2 0 002 2h2v2a2 2 0 002 2h2a2 2 0 002-2v-2h2a2 2 0 002-2V9z" /></svg>
                     Nueva Cita
                 </a>
@@ -98,103 +80,103 @@
         
     </main>
 
-</body>
-<!-- Modal: Cita Agregada -->
-<div th:if="${citaAgregada}" id="modalCitaAgregada" class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-    <div class="bg-white p-6 rounded-2xl shadow-xl text-center max-w-md w-full">
-        <h2 class="text-2xl font-bold mb-2 text-green-600">¡Cita registrada!</h2>
-        <p class="text-gray-700">La cita se ha registrado correctamente.</p>
-        <button onclick="document.getElementById('modalCitaAgregada').classList.add('hidden')" class="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Cerrar</button>
-    </div>
-</div>
-
-<!-- Modal: Cita Editada -->
-<div th:if="${citaEditada}" id="modalCitaEditada" class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-    <div class="bg-white p-6 rounded-2xl shadow-xl text-center max-w-md w-full">
-        <h2 class="text-2xl font-bold mb-2 text-blue-600">¡Cita actualizada!</h2>
-        <p class="text-gray-700">Los datos de la cita se han actualizado correctamente.</p>
-        <button onclick="document.getElementById('modalCitaEditada').classList.add('hidden')" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Cerrar</button>
-    </div>
-</div>
-
-<!-- Modal: Cita Eliminada -->
-<div th:if="${citaEliminada}" id="modalCitaEliminada" class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-    <div class="bg-white p-6 rounded-2xl shadow-xl text-center max-w-md w-full">
-        <h2 class="text-2xl font-bold mb-2 text-red-600">¡Cita eliminada!</h2>
-        <p class="text-gray-700">La cita ha sido eliminada correctamente.</p>
-        <button onclick="document.getElementById('modalCitaEliminada').classList.add('hidden')" class="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Cerrar</button>
-    </div>
-</div>
-<div id="modalConfirmacionEliminarCita" class="fixed inset-0 bg-black/40 z-50 hidden items-center justify-center">
-    <div class="bg-white p-6 rounded-2xl shadow-xl w-full max-w-md">
-        <h2 class="text-xl font-bold mb-4 text-center text-red-600">¿Deseas eliminar esta cita?</h2>
-        <p class="text-center text-sm text-gray-700 mb-6">Esta acción no se puede deshacer.</p>
-        <div class="flex justify-center gap-4">
-            <button onclick="cerrarModalEliminar()" class="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400">Cancelar</button>
-            <button onclick="confirmarEliminarCita()" class="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600">Sí, eliminar</button>
+    <!-- Modal: Cita Agregada -->
+    <div th:if="${citaAgregada}" id="modalCitaAgregada" class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+        <div class="bg-white p-6 rounded-2xl shadow-xl text-center max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-2 text-green-600">¡Cita registrada!</h2>
+            <p class="text-gray-700">La cita se ha registrado correctamente.</p>
+            <button onclick="document.getElementById('modalCitaAgregada').classList.add('hidden')" class="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Cerrar</button>
         </div>
     </div>
-</div>
 
-<!-- Modal: Error al eliminar -->
-<div th:if="${errorEliminacion}" id="modalErrorCita" class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-    <div class="bg-white p-6 rounded-2xl shadow-xl text-center max-w-md w-full">
-        <h2 class="text-2xl font-bold mb-2 text-red-500">No se puede eliminar</h2>
-        <p class="text-gray-700" th:text="${errorEliminacion}">La cita no puede ser eliminada.</p>
-        <button onclick="document.getElementById('modalErrorCita').classList.add('hidden')" class="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Cerrar</button>
+    <!-- Modal: Cita Editada -->
+    <div th:if="${citaEditada}" id="modalCitaEditada" class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+        <div class="bg-white p-6 rounded-2xl shadow-xl text-center max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-2 text-blue-600">¡Cita actualizada!</h2>
+            <p class="text-gray-700">Los datos de la cita se han actualizado correctamente.</p>
+            <button onclick="document.getElementById('modalCitaEditada').classList.add('hidden')" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Cerrar</button>
+        </div>
     </div>
-</div>
-</html>
-<script>
-    let citaIdEliminar = null;
 
-    function abrirModalEliminar(id) {
-        citaIdEliminar = id;
-        const modal = document.getElementById("modalConfirmacionEliminarCita");
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
-    }
+    <!-- Modal: Cita Eliminada -->
+    <div th:if="${citaEliminada}" id="modalCitaEliminada" class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+        <div class="bg-white p-6 rounded-2xl shadow-xl text-center max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-2 text-red-600">¡Cita eliminada!</h2>
+            <p class="text-gray-700">La cita ha sido eliminada correctamente.</p>
+            <button onclick="document.getElementById('modalCitaEliminada').classList.add('hidden')" class="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Cerrar</button>
+        </div>
+    </div>
 
-    function cerrarModalEliminar() {
-        const modal = document.getElementById("modalConfirmacionEliminarCita");
-        modal.classList.remove("flex");
-        modal.classList.add("hidden");
-        citaIdEliminar = null;
-    }
+    <div id="modalConfirmacionEliminarCita" class="fixed inset-0 bg-black/40 z-50 hidden items-center justify-center">
+        <div class="bg-white p-6 rounded-2xl shadow-xl w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4 text-center text-red-600">¿Deseas eliminar esta cita?</h2>
+            <p class="text-center text-sm text-gray-700 mb-6">Esta acción no se puede deshacer.</p>
+            <div class="flex justify-center gap-4">
+                <button onclick="cerrarModalEliminar()" class="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400">Cancelar</button>
+                <button onclick="confirmarEliminarCita()" class="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600">Sí, eliminar</button>
+            </div>
+        </div>
+    </div>
 
-    function confirmarEliminarCita() {
-        if (citaIdEliminar !== null) {
-            const form = document.getElementById("formEliminarCita");
-            const action = `/remove-cita/${citaIdEliminar}`;
-            form.setAttribute("action", action);
-            form.submit();
+    <!-- Modal: Error al eliminar -->
+    <div th:if="${errorEliminacion}" id="modalErrorCita" class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+        <div class="bg-white p-6 rounded-2xl shadow-xl text-center max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-2 text-red-500">No se puede eliminar</h2>
+            <p class="text-gray-700" th:text="${errorEliminacion}">La cita no puede ser eliminada.</p>
+            <button onclick="document.getElementById('modalErrorCita').classList.add('hidden')" class="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        let citaIdEliminar = null;
+
+        function abrirModalEliminar(id) {
+            citaIdEliminar = id;
+            const modal = document.getElementById("modalConfirmacionEliminarCita");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
         }
-    }
-</script>
 
-<script>
-    window.addEventListener("DOMContentLoaded", () => {
-        const modales = [
-            "modalCitaAgregada",
-            "modalCitaEditada",
-            "modalCitaEliminada",
-            "modalErrorCita"
-        ];
+        function cerrarModalEliminar() {
+            const modal = document.getElementById("modalConfirmacionEliminarCita");
+            modal.classList.remove("flex");
+            modal.classList.add("hidden");
+            citaIdEliminar = null;
+        }
 
-        modales.forEach(id => {
-            const modal = document.getElementById(id);
-            if (modal) {
-                // Mostrar el modal si existe
-                modal.classList.remove("hidden");
-                modal.classList.add("flex");
-
-                // Cierre automático después de 4 segundos
-                setTimeout(() => {
-                    modal.classList.add("hidden");
-                    modal.classList.remove("flex");
-                }, 4000);
+        function confirmarEliminarCita() {
+            if (citaIdEliminar !== null) {
+                const form = document.getElementById("formEliminarCita");
+                const action = `/citas/eliminar/${citaIdEliminar}`;
+                form.setAttribute("action", action);
+                form.submit();
             }
-        });
-    });
-</script>
+        }
+    </script>
 
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const modales = [
+                "modalCitaAgregada",
+                "modalCitaEditada",
+                "modalCitaEliminada",
+                "modalErrorCita"
+            ];
+
+            modales.forEach(id => {
+                const modal = document.getElementById(id);
+                if (modal) {
+                    // Mostrar el modal si existe
+                    modal.classList.remove("hidden");
+                    modal.classList.add("flex");
+
+                    // Cierre automático después de 4 segundos
+                    setTimeout(() => {
+                        modal.classList.add("hidden");
+                        modal.classList.remove("flex");
+                    }, 4000);
+                }
+            });
+        });
+    </script>
+</div>

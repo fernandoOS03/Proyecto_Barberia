@@ -1,79 +1,104 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Horarios</title>
+<div th:fragment="content">
+	<!-- Contenedor Principal -->
+	<main class="container mx-auto my-10">
+		<div class="p-8 md:p-10 rounded-2xl max-w-7xl mx-auto">
+			<header class="mb-8 text-center">
+				<h1 class="font-serif text-5xl font-bold text-text-primary">Listado
+					de Horarios</h1>
+			</header>
 
-  
+			<!-- Contenedor de la Tabla -->
+			<div
+				class="bg-background-secondary rounded-xl shadow-lg overflow-hidden">
+				<div class="overflow-x-auto">
+					<table class="w-full text-left">
+						<thead class="border-b border-text-primary/20">
+							<tr>
+								<th
+									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Código</th>
+								<th
+									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Día</th>
+								<th
+									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Hora
+									Inicio</th>
+								<th
+									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Hora
+									Fin</th>
+								<th
+									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Barbero</th>
+								<th
+									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70 text-center">Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- Bucle de Thymeleaf para cada horario -->
+							<tr th:each="horario : ${horarioList}"
+								class="border-b border-background-primary last:border-b-0 hover:bg-background-primary/50 transition-colors">
+								<td class="p-4 align-middle text-text-primary"
+									th:text="${horario.idHorario}"></td>
+								<td class="p-4 align-middle text-text-primary"
+									th:text="${horario.diaSemana}"></td>
+								<td class="p-4 align-middle text-text-primary"
+									th:text="${horario.horaInicio}"></td>
+								<td class="p-4 align-middle text-text-primary"
+									th:text="${horario.horaFin}"></td>
+								<td class="p-4 font-semibold align-middle text-text-primary"
+									th:text="${horario.barbero.nombreBarbero}"></td>
+								<td
+									class="p-4 text-center space-x-4 whitespace-nowrap align-middle">
+									<a th:href="@{/edit-horario/{id}(id=${horario.idHorario})}"
+									class="inline-block text-text-primary/70 hover:text-brand-accent transition-colors"
+									title="Editar"> <svg xmlns="http://www.w3.org/2000/svg"
+											class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+											<path
+												d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+											<path fill-rule="evenodd"
+												d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+												clip-rule="evenodd" /></svg>
+								</a> <a th:href="@{/view-horario/{id}(id=${horario.idHorario})}"
+									class="inline-block text-text-primary/70 hover:text-blue-400 transition-colors"
+									title="Ver"> <svg xmlns="http://www.w3.org/2000/svg"
+											class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+											<path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+											<path fill-rule="evenodd"
+												d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.27 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+												clip-rule="evenodd" /></svg>
+								</a> <a th:href="@{/remove-horario/{id}(id=${horario.idHorario})}"
+									class="inline-block text-text-primary/70 hover:text-red-500 transition-colors"
+									title="Eliminar"
+									th:onclick="|return confirm('¿Está seguro de eliminar este horario?')|">
+										<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+											viewBox="0 0 20 20" fill="currentColor">
+											<path fill-rule="evenodd"
+												d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+												clip-rule="evenodd" /></svg>
+								</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 
-    <!-- 2. Cargar el CDN de Tailwind y la configuración personalizada -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script th:src="@{/js/tailwind-config.js}"></script>
+			<!-- Botones de acción inferiores -->
+			<div class="flex justify-between items-center mt-8">
+				<a th:href="@{/new-horario}"
+					class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+						viewBox="0 0 20 20" fill="currentColor">
+						<path
+							d="M17 9a2 2 0 00-2-2h-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v2H5a2 2 0 00-2 2v2a2 2 0 002 2h2v2a2 2 0 002 2h2a2 2 0 002-2v-2h2a2 2 0 002-2V9z" /></svg>
+					Nuevo Horario
+				</a> <a th:href="@{/}"
+					class="py-2.5 px-6 rounded-lg border border-text-primary/30 text-text-primary/80 font-semibold hover:bg-background-secondary hover:border-text-primary/60 transition-all flex items-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+						viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd"
+							d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
+							clip-rule="evenodd" /></svg> Menú Principal
+				</a>
+			</div>
+		</div>
+	</main>
 
-</head>
-<body class="bg-background-primary font-sans">
-
-    <!-- Contenedor Principal -->
-    <main class="container mx-auto my-10">
-        <div class="p-8 md:p-10 rounded-2xl max-w-7xl mx-auto">
-            <header class="mb-8 text-center">
-                <h1 class="font-serif text-5xl font-bold text-text-primary">Listado de Horarios</h1>
-            </header>
-    
-            <!-- Contenedor de la Tabla -->
-            <div class="bg-background-secondary rounded-xl shadow-lg overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead class="border-b border-text-primary/20">
-                            <tr>
-                                <th class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Código</th>
-                                <th class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Día</th>
-                                <th class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Hora Inicio</th>
-                                <th class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Hora Fin</th>
-                                <th class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Barbero</th>
-                                <th class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70 text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Bucle de Thymeleaf para cada horario -->
-                            <tr th:each="horario : ${horarioList}" class="border-b border-background-primary last:border-b-0 hover:bg-background-primary/50 transition-colors">
-                                <td class="p-4 align-middle text-text-primary" th:text="${horario.idHorario}"></td>
-                                <td class="p-4 align-middle text-text-primary" th:text="${horario.diaSemana}"></td>
-                                <td class="p-4 align-middle text-text-primary" th:text="${horario.horaInicio}"></td>
-                                <td class="p-4 align-middle text-text-primary" th:text="${horario.horaFin}"></td>
-                                <td class="p-4 font-semibold align-middle text-text-primary" th:text="${horario.barbero.nombreBarbero}"></td>
-                                <td class="p-4 text-center space-x-4 whitespace-nowrap align-middle">
-                                    <a th:href="@{/edit-horario/{id}(id=${horario.idHorario})}" class="inline-block text-text-primary/70 hover:text-brand-accent transition-colors" title="Editar">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" /></svg>
-                                    </a>
-                                    <a th:href="@{/view-horario/{id}(id=${horario.idHorario})}" class="inline-block text-text-primary/70 hover:text-blue-400 transition-colors" title="Ver">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.27 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
-                                    </a>
-                                    <a th:href="@{/remove-horario/{id}(id=${horario.idHorario})}" class="inline-block text-text-primary/70 hover:text-red-500 transition-colors" title="Eliminar"
-                                       th:onclick="|return confirm('¿Está seguro de eliminar este horario?')|">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-    
-            <!-- Botones de acción inferiores -->
-            <div class="flex justify-between items-center mt-8">
-                <a th:href="@{/new-horario}" class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20">
-                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M17 9a2 2 0 00-2-2h-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v2H5a2 2 0 00-2 2v2a2 2 0 002 2h2v2a2 2 0 002 2h2a2 2 0 002-2v-2h2a2 2 0 002-2V9z" /></svg>
-                    Nuevo Horario
-                </a>
-                <a th:href="@{/}" class="py-2.5 px-6 rounded-lg border border-text-primary/30 text-text-primary/80 font-semibold hover:bg-background-secondary hover:border-text-primary/60 transition-all flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
-                    Menú Principal
-                </a>
-            </div>
-        </div>
-    </main>
-
-</body>
-</html>
+</div>

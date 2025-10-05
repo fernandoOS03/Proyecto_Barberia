@@ -42,18 +42,23 @@ public class BarberoController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @GetMapping("/barbero-list")
+    @GetMapping("/barberos")
     public String listaBarberos(Model model) {
         List<Barbero> barberoList = barberoService.getAll();
         model.addAttribute("barberoList", barberoList);
-        return "barbero-list";
+        model.addAttribute("pageTitle", "Barberos");
+        model.addAttribute("pageSubtitle", "Gestión de personal");
+        model.addAttribute("content", "barberos/barbero-list");
+        
+        return "layouts/main-layout";
     }
-
+    
     @GetMapping("/new-barbero")
     public String showNuevoBarbero(Model model) {
         model.addAttribute("barbero", new Barbero());
         model.addAttribute("type", "N");
-        return "barbero";
+        //return "barbero";
+        return "barberos/barbero";
     }
 
     @GetMapping("/edit-barbero/{id}")
@@ -65,7 +70,8 @@ public class BarberoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "barbero";
+        //return "barbero";
+        return "barberos/barbero";
     }
 
     @GetMapping("/view-barbero/{id}")
@@ -77,7 +83,9 @@ public class BarberoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "barbero";
+        //return "barbero";
+        return "barberos/barbero";
+      
     }
 
     @GetMapping("/remove-barbero/{id}")
@@ -85,9 +93,11 @@ public class BarberoController {
         boolean eliminado = barberoService.eliminar(id);
         if (!eliminado) {
             redirectAttrs.addFlashAttribute("errorEliminacion", true);
-            return "redirect:/barbero-list";
+            //return "redirect:/barbero-list";
+            return "redirect:/barberos/barbero-list";
         }
-        return "redirect:/barbero-list";
+        //return "redirect:/barbero-list";
+        return "redirect:/barberos/barbero-list";
     }
 
     /*@PostMapping("/save-new-barbero")
@@ -110,7 +120,8 @@ public class BarberoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/barbero-list";
+        //return "redirect:/barbero-list";
+        return "redirect:/barberos/barbero-list";
     }
 
     /*@PostMapping("/save-edit-barbero")
@@ -133,7 +144,8 @@ public class BarberoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/barbero-list";
+        //return "redirect:/barbero-list";
+        return "redirect:/barberos/barbero-list";
     }
     @GetMapping("/barbero-report")
     @ResponseBody

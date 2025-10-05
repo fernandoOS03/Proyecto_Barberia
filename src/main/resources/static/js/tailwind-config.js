@@ -2,10 +2,10 @@ tailwind.config = {
            theme: {
                extend: {
                    colors: {
-                       'background-primary': '#2D2D2F',
-                       'background-secondary': '#202022',
-                       'text-primary': '#F6D8C0',
-                       'brand-accent': '#FE6628',
+                       'background-primary': '#ebeff2',
+                       'background-secondary': '#fafafa',
+                       'text-primary': '#4a4a4a',
+                       'brand-accent': '#6941c6',
                    },
                    fontFamily: {
                        'sans': ['Lato', 'sans-serif'],
@@ -14,3 +14,5 @@ tailwind.config = {
                }
            }
        }
+	   
+	   

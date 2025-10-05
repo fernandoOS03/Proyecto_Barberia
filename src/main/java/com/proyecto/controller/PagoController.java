@@ -24,11 +24,15 @@ public class PagoController {
     @Autowired
     private CitaService citaService;
 
-    @GetMapping("/pago-list")
+    @GetMapping("/pagos")
     public String listaPagos(Model model) {
         List<Pago> pagoList = pagoService.getAll();
         model.addAttribute("pagoList", pagoList);
-        return "pago-list";
+        model.addAttribute("pageTitle", "Pagos");
+        model.addAttribute("pageSubtitle", "Registrar y ver pagos");
+        model.addAttribute("content", "pagos/pago-list");
+        
+        return "layouts/main-layout";
     }
 
     @GetMapping("/new-pago")
@@ -36,7 +40,7 @@ public class PagoController {
         model.addAttribute("pago", new Pago());
         model.addAttribute("citaList", citaService.obtenerCitasPendientesPago());
         model.addAttribute("type", "N");
-        return "pago";
+        return "pagos/pago";
     }
 
     @GetMapping("/edit-pago/{id}")
@@ -48,7 +52,7 @@ public class PagoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "pago";
+        return "pagos/pago";
     }
 
     @GetMapping("/view-pago/{id}")
@@ -60,13 +64,13 @@ public class PagoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "pago";
+        return "pagos/pago";
     }
 
     @GetMapping("/remove-pago/{id}")
     public String removePago(@PathVariable("id") Integer id) {
         pagoService.eliminar(id);
-        return "redirect:/pago-list";
+        return "redirect:/pagos/pago-list";
     }
 
     @PostMapping("/save-new-pago")
@@ -79,7 +83,7 @@ public class PagoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/pago-list";
+        return "redirect:/pagos/pago-list";
     }
 
     @PostMapping("/save-edit-pago")
@@ -90,6 +94,6 @@ public class PagoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/pago-list";
+        return "redirect:/pagos/pago-list";
     }
 }

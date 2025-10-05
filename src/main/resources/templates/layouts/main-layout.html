@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} ?: 'Barbería'">Barbería</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            color: rgba(74, 74, 74, 0.8);
+            border-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .sidebar-item:hover {
+            background-color: #ebeff2;
+            color: #6941c6;
+        }
+        .sidebar-item.active {
+            background-color: #ebeff2;
+            color: #6941c6;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-[#ebeff2] text-[#4a4a4a] font-sans">
+    <div class="flex min-h-screen">
+        <!-- Sidebar Persistente -->
+        <div th:replace="~{layouts/sidebar :: sidebar}"></div>
+        
+        <!-- Contenido Dinámico -->
+        <main class="flex-1">
+            <!-- Header (opcional, también puede ser persistente) -->
+            <header class="bg-white shadow-sm border-b p-6">
+                <h1 class="font-serif text-2xl font-bold" th:text="${pageTitle} ?: 'Dashboard'"></h1>
+                <p class="text-[#4a4a4a]/60" th:text="${pageSubtitle} ?: 'Sistema de gestión'"></p>
+            </header>
+            
+            <!-- Aquí se inserta el contenido específico de cada página -->
+            <div class="p-6">
+                <div th:replace="${content}"></div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

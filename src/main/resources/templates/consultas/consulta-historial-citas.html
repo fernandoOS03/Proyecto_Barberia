@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Citas</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/js/tailwind-config.js}"></script>
+</head>
+<body class="bg-background-primary text-text-primary font-sans min-h-screen">
+    <div class="flex min-h-screen">
+        <main class="flex-1 p-6 md:p-10">
+            <header class="mb-10 text-center">
+                <h2 class="font-serif text-4xl font-bold">Historial de Citas</h2>
+            </header>
+            <div class="bg-background-secondary rounded-lg shadow-lg p-6 md:p-8">
+                <!-- Formulario de Filtro -->
+                <div class="mb-8">
+                    <form method="post" th:action="@{/consulta-historial-citas}" th:object="${cliente}" class="flex flex-col sm:flex-row sm:items-end gap-4">
+                        <div class="flex-1">
+                            <label for="idCliente" class="block text-text-primary text-sm font-medium mb-2">Seleccione un Cliente</label>
+                            <select id="idCliente" th:field="*{idCliente}" required class="w-full bg-background-primary border border-brand-accent rounded-md p-2 text-background-secondary focus:outline-none focus:ring-2 focus:ring-brand-accent transition">
+                                <option value="" disabled>-- Seleccione --</option>
+                                <option th:each="cl : ${clienteList}" th:value="${cl.idCliente}" th:text="${cl.nombreCliente}"></option>
+                            </select>
+                        </div>
+                        <div class="flex gap-4">
+                            <button type="submit" class="bg-brand-accent text-background-primary font-medium py-2 px-4 rounded-md hover:bg-opacity-90 transition">Buscar</button>
+                            <a th:href="@{/}" class="bg-background-primary text-background-secondary font-medium py-2 px-4 rounded-md border border-brand-accent hover:bg-opacity-90 transition">Inicio</a>
+                        </div>
+                    </form>
+                </div>
+                <!-- Tabla de Resultados -->
+                <div th:if="${citas != null and !citas.isEmpty()}" class="overflow-x-auto">
+                    <table class="w-full table-auto bg-background-primary rounded-md shadow-md">
+                        <thead>
+                            <tr class="bg-background-secondary text-text-primary">
+                                <th class="px-4 py-3 text-left text-sm font-medium">ID</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Fecha</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Hora</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Barbero</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Servicio</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="c : ${citas}" class="border-b border-brand-accent/20 hover:bg-background-primary/80 transition">
+                                <td class="px-4 py-3 text-background-secondary" th:text="${c.idCita}"></td>
+                                <td class="px-4 py-3 text-background-secondary" th:text="${c.fecha}"></td>
+                                <td class="px-4 py-3 text-background-secondary" th:text="${c.hora}"></td>
+                                <td class="px-4 py-3 text-background-secondary" th:text="${c.barbero.nombreBarbero}"></td>
+                                <td class="px-4 py-3 text-background-secondary" th:text="${c.servicio.nombreServicio}"></td>
+                                <td class="px-4 py-3 text-background-secondary" th:text="${c.estado}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Alerta si no hay resultados -->
+                <div th:if="${citas == null or citas.isEmpty()}" class="text-center py-6">
+                    <p class="text-text-primary text-lg font-medium">No se encontraron citas para el cliente seleccionado.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

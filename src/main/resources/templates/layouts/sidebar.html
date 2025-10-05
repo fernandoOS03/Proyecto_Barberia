@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Barbería</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar-item {
+            @apply flex items-center px-4 py-3 text-text-primary/80 hover:bg-background-primary hover:text-brand-accent rounded-lg transition-all duration-200 ease-in-out;
+        }
+        .sidebar-item.active {
+            @apply bg-background-primary text-brand-accent font-semibold;
+        }
+        .sidebar-section {
+            @apply text-text-primary/50 text-xs font-semibold uppercase tracking-wider px-4 py-2;
+        }
+    </style>
+</head>
+<body>
+    <div th:fragment="sidebar">
+        <aside class="w-64 bg-background-secondary min-h-screen border-r border-gray-200 flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-200">
+                <h1 class="font-serif text-2xl font-bold text-text-primary">Barbería</h1>
+                <span class="text-text-primary/60 text-sm">Sistema de Gestión</span>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 p-4 space-y-1">
+                <div class="sidebar-section">GESTIÓN PRINCIPAL</div>
+                
+                <a href="/barberos" class="sidebar-item">
+                    <i class="fas fa-user w-5 mr-3 text-center"></i>
+                    Barberos
+                </a>
+                
+                <a href="/cliente-list" class="sidebar-item">
+                    <i class="fas fa-users w-5 mr-3 text-center"></i>
+                    Clientes
+                </a>
+                
+                <a href="/servicio-list" class="sidebar-item">
+                    <i class="fas fa-concierge-bell w-5 mr-3 text-center"></i>
+                    Servicios
+                </a>
+                
+                <a href="/cita-list" class="sidebar-item">
+                    <i class="fas fa-calendar-alt w-5 mr-3 text-center"></i>
+                    Citas
+                </a>
+                
+                <a href="/horario-list" class="sidebar-item">
+                    <i class="fas fa-clock w-5 mr-3 text-center"></i>
+                    Horarios
+                </a>
+
+                <div class="sidebar-section mt-6">FINANZAS</div>
+                
+                <a href="/pago-list" class="sidebar-item">
+                    <i class="fas fa-credit-card w-5 mr-3 text-center"></i>
+                    Pagos
+                </a>
+
+                <div class="sidebar-section mt-6">CONSULTAS</div>
+                
+                <a href="/consulta-horarios-barbero" class="sidebar-item">
+                    <i class="fas fa-search w-5 mr-3 text-center"></i>
+                    Consulta Horarios
+                </a>
+                
+                <a href="/consulta-historial-citas" class="sidebar-item">
+                    <i class="fas fa-history w-5 mr-3 text-center"></i>
+                    Historial de Citas
+                </a>
+            </nav>
+
+            <!-- Footer -->
+            <div class="p-4 border-t border-gray-200">
+                <p class="text-text-primary/50 text-xs text-center">&copy; 2025 Barbería Inc.</p>
+            </div>
+        </aside>
+    </div>
+</body>
+</html>

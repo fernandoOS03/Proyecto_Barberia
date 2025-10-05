@@ -24,11 +24,15 @@ public class HorarioController {
     @Autowired
     private BarberoService barberoService;
 
-    @GetMapping("/horario-list")
+    @GetMapping("/horarios")
     public String listaHorarios(Model model) {
         List<Horario> horarioList = horarioService.getAll();
         model.addAttribute("horarioList", horarioList);
-        return "horario-list";
+        model.addAttribute("pageTitle", "Horarios");
+        model.addAttribute("pageSubtitle", "Definir disponibilidad");
+        model.addAttribute("content", "horarios/horario-list");
+        
+        return "layouts/main-layout";
     }
 
     @GetMapping("/new-horario")
@@ -36,7 +40,7 @@ public class HorarioController {
         model.addAttribute("horario", new Horario());
         model.addAttribute("barberoList", barberoService.getAll());
         model.addAttribute("type", "N");
-        return "horario";
+        return "horarios/horario";
     }
 
     @GetMapping("/edit-horario/{id}")
@@ -48,7 +52,7 @@ public class HorarioController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "horario";
+        return "horarios/horario";
     }
 
     @GetMapping("/view-horario/{id}")
@@ -60,13 +64,13 @@ public class HorarioController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "horario";
+        return "horarios/horario";
     }
 
     @GetMapping("/remove-horario/{id}")
     public String removeHorario(@PathVariable("id") Integer id) {
         horarioService.eliminar(id);
-        return "redirect:/horario-list";
+        return "redirect:/horarios/horario-list";
     }
 
     @PostMapping("/save-new-horario")
@@ -76,7 +80,7 @@ public class HorarioController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/horario-list";
+        return "redirect:/horarios/horario-list";
     }
 
     @PostMapping("/save-edit-horario")
@@ -86,7 +90,7 @@ public class HorarioController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/horario-list";
+        return "redirect:/horarios/horario-list";
     }
 
     @GetMapping("/consulta-horarios-barbero")
@@ -94,7 +98,7 @@ public class HorarioController {
         model.addAttribute("barbero", new Barbero());
         model.addAttribute("barberoList", barberoService.getAll());
         model.addAttribute("horarios", null);
-        return "consulta-horarios-barbero";
+        return "consultas/consulta-horarios-barbero";
     }
 
     @PostMapping("/consulta-horarios-barbero")
@@ -102,7 +106,7 @@ public class HorarioController {
         model.addAttribute("barbero", barbero);
         model.addAttribute("barberoList", barberoService.getAll());
         model.addAttribute("horarios", horarioService.listarPorBarbero(barbero.getIdBarbero()));
-        return "consulta-horarios-barbero";
+        return "consultas/consulta-horarios-barbero";
     }
 
 }

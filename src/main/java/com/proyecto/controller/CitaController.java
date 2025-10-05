@@ -32,11 +32,15 @@ public class CitaController {
     @Autowired
     private BarberoService barberoService;
 
-    @GetMapping("/cita-list")
+    @GetMapping("/citas")
     public String listaCitas(Model model) {
         List<Cita> citaList = citaService.getAll();
         model.addAttribute("citaList", citaList);
-        return "cita-list";
+        model.addAttribute("pageTitle", "Citas");
+        model.addAttribute("pageSubtitle", "Agendar y ver citas");
+        model.addAttribute("content", "citas/cita-list");
+        
+        return "layouts/main-layout";
     }
 
     @GetMapping("/new-cita")
@@ -48,7 +52,8 @@ public class CitaController {
         model.addAttribute("estadoList", EstadoCita.values());
         model.addAttribute("estadoPagoList", EstadoPago.values());
         model.addAttribute("type", "N");
-        return "cita";
+        //return "cita";
+        return "citas/cita";
     }
 
     @GetMapping("/edit-cita/{id}")
@@ -65,7 +70,8 @@ public class CitaController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "cita";
+        //return "cita";
+        return "citas/cita";
     }
 
     @GetMapping("/view-cita/{id}")
@@ -82,7 +88,8 @@ public class CitaController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "cita";
+        return "citas/cita";
+        //return "cita";
     }
 
     @GetMapping("/remove-cita/{id}")
@@ -91,7 +98,8 @@ public class CitaController {
             Cita cita = citaService.getCita(id);
             if (cita.getEstadoPago() != null && cita.getEstadoPago().toString().equals("Pagado")) {
                 redirectAttrs.addFlashAttribute("errorEliminacion", "La cita no puede ser eliminada porque ya ha sido pagada.");
-                return "redirect:/cita-list";
+                //return "redirect:/cita-list";
+                return "redirect:/citas/cita-list";
             }
             citaService.eliminar(id);
             redirectAttrs.addFlashAttribute("citaEliminada", true);
@@ -99,7 +107,8 @@ public class CitaController {
             e.printStackTrace();
             redirectAttrs.addFlashAttribute("errorEliminacion", "Ocurrió un error al eliminar la cita.");
         }
-        return "redirect:/cita-list";
+        //return "redirect:/cita-list";
+        return "redirect:/citas/cita-list";
     }
 
     @PostMapping("/save-new-cita")
@@ -110,7 +119,8 @@ public class CitaController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/cita-list";
+        //return "redirect:/cita-list";
+        return "redirect:/citas/cita-list";
     }
 
     @PostMapping("/save-edit-cita")
@@ -121,7 +131,8 @@ public class CitaController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/cita-list";
+        //return "redirect:/cita-list";
+        return "redirect:/citas/cita-list";
     }
 
     // Consulta historial de citas por cliente
@@ -130,7 +141,8 @@ public class CitaController {
         model.addAttribute("cliente", new Cliente());
         model.addAttribute("clienteList", clienteService.getAll());
         model.addAttribute("citas", null);
-        return "consulta-historial-citas";
+        //return "consulta-historial-citas";
+        return "consultas/consulta-historial-citas";
     }
 
     @PostMapping("/consulta-historial-citas")
@@ -138,6 +150,7 @@ public class CitaController {
         model.addAttribute("cliente", cliente);
         model.addAttribute("clienteList", clienteService.getAll());
         model.addAttribute("citas", citaService.listarPorCliente(cliente.getIdCliente()));
-        return "consulta-historial-citas";
+        //return "consulta-historial-citas";
+        return "consultas/consulta-historial-citas";
     }
 }

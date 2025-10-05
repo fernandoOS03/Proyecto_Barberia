@@ -40,11 +40,15 @@ public class ServicioController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @GetMapping("/servicio-list")
+    @GetMapping("/servicios")
     public String listaServicios(Model model) {
         List<Servicio> servicioList = servicioService.getAll();
         model.addAttribute("servicioList", servicioList);
-        return "servicio-list";
+        model.addAttribute("pageTitle", "Servicios");
+        model.addAttribute("pageSubtitle", "Catálogo de servicios");
+        model.addAttribute("content", "servicios/servicio-list");
+        
+        return "layouts/main-layout";
     }
 
     @GetMapping("/new-servicio")

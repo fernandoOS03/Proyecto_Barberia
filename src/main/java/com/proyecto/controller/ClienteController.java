@@ -16,22 +16,27 @@ import com.proyecto.service.ClienteService;
 
 @Controller
 public class ClienteController {
-	
+
 	@Autowired
 	private ClienteService clienteService;
-	
-	@GetMapping("/cliente-list")
-	public String listaClientes(Model model) {
-		List<Cliente> clienteList = clienteService.getAll();
-		model.addAttribute("clienteList", clienteList);
-		return "cliente-list";
-	}
 
+	@GetMapping("/clientes")
+	public String listaClientes(Model model) {
+	    List<Cliente> clienteList = clienteService.getAll();
+	    model.addAttribute("clienteList", clienteList);
+	    model.addAttribute("pageTitle", "Clientes");
+	    model.addAttribute("pageSubtitle", "Administración de clientes");
+	    model.addAttribute("content", "clientes/cliente-list"); // ← CORRECTO
+	    
+	    return "layouts/main-layout";
+	}
+	
 	@GetMapping("/new-cliente")
 	public String showNuevoCliente(Model model) {
 		model.addAttribute("cliente", new Cliente());
 		model.addAttribute("type", "N");
-		return "cliente";
+
+		return "clientes/cliente";
 	}
 
 	@GetMapping("/edit-cliente/{id}")
@@ -42,7 +47,8 @@ public class ClienteController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "cliente";
+
+		return "clientes/cliente";
 	}
 
 	@GetMapping("/view-cliente/{id}")
@@ -53,37 +59,41 @@ public class ClienteController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "cliente";
+		// return "cliente";
+		return "clientes/cliente";
 	}
 
 	@GetMapping("/remove-cliente/{id}")
 	public String removeCliente(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
-	    boolean eliminado = clienteService.eliminar(id);
-	    if (!eliminado) {
-	        redirectAttributes.addFlashAttribute("errorEliminacion", true);
-	    }
-	    return "redirect:/cliente-list";
+		boolean eliminado = clienteService.eliminar(id);
+		if (!eliminado) {
+			redirectAttributes.addFlashAttribute("errorEliminacion", true);
+		}
+		return "redirect:/clientes/cliente-list";
+		// return "redirect:/cliente-list";
 	}
-	
+
 	@PostMapping("/save-new-cliente")
 	public String saveNewCliente(@ModelAttribute Cliente cliente, RedirectAttributes redirectAttributes) {
-	    try {
-	        clienteService.crear(cliente);
-	        redirectAttributes.addFlashAttribute("clienteAgregado", true);
-	    } catch (Exception e) {
-	        redirectAttributes.addFlashAttribute("errorCliente", e.getMessage());
-	    }
-	    return "redirect:/cliente-list";
+		try {
+			clienteService.crear(cliente);
+			redirectAttributes.addFlashAttribute("clienteAgregado", true);
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorCliente", e.getMessage());
+		}
+		return "redirect:/clientes/cliente-list";
+		// return "redirect:/cliente-list";
 	}
 
 	@PostMapping("/save-edit-cliente")
 	public String saveEditCliente(@ModelAttribute Cliente cliente, RedirectAttributes redirectAttributes) {
-	    try {
-	        clienteService.editar(cliente);
-	        redirectAttributes.addFlashAttribute("clienteEditado", true);
-	    } catch (Exception e) {
-	        redirectAttributes.addFlashAttribute("errorCliente", e.getMessage());
-	    }
-	    return "redirect:/cliente-list";
+		try {
+			clienteService.editar(cliente);
+			redirectAttributes.addFlashAttribute("clienteEditado", true);
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorCliente", e.getMessage());
+		}
+		// return "redirect:/cliente-list";
+		return "redirect:/clientes/cliente-list";
 	}
 }

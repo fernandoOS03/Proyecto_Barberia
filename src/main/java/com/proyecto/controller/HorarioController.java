@@ -93,20 +93,44 @@ public class HorarioController {
         return "redirect:/horarios/horario-list";
     }
 
-    @GetMapping("/consulta-horarios-barbero")
-    public String showConsultaHorarios(Model model) {
+    /*public String showConsultaHorarios(Model model) {
         model.addAttribute("barbero", new Barbero());
         model.addAttribute("barberoList", barberoService.getAll());
         model.addAttribute("horarios", null);
         return "consultas/consulta-horarios-barbero";
+    }*/
+    
+    @GetMapping("/horarios-barberos")
+    public String showConsultaHorarios(Model model) {
+        model.addAttribute("barbero", new Barbero());
+        model.addAttribute("barberoList", barberoService.getAll());
+        model.addAttribute("horarios", null);
+        model.addAttribute("pageTitle", "Consulta Horarios");
+        model.addAttribute("pageSubtitle", "Ver horarios de barberos");
+        model.addAttribute("content", "consultas/consulta-horarios-barbero");
+        return "layouts/main-layout";
     }
 
-    @PostMapping("/consulta-horarios-barbero")
+   /* @PostMapping("/consulta-horarios-barbero")
     public String procesarConsultaHorarios(@ModelAttribute Barbero barbero, Model model) {
         model.addAttribute("barbero", barbero);
         model.addAttribute("barberoList", barberoService.getAll());
         model.addAttribute("horarios", horarioService.listarPorBarbero(barbero.getIdBarbero()));
         return "consultas/consulta-horarios-barbero";
+    }*/
+    @PostMapping("/horarios-barberos")
+    public String procesarConsultaHorarios(@ModelAttribute Barbero barbero, Model model) {
+        model.addAttribute("barbero", barbero);
+        model.addAttribute("barberoList", barberoService.getAll());
+        model.addAttribute("horarios", horarioService.listarPorBarbero(barbero.getIdBarbero()));
+        model.addAttribute("pageTitle", "Consulta Horarios");
+        model.addAttribute("pageSubtitle", "Ver horarios de barberos");
+        model.addAttribute("content", "consultas/consulta-horarios-barbero"); 
+        
+        return "layouts/main-layout"; 
     }
+    
+    
+    
 
 }

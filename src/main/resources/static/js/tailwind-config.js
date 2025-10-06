@@ -8,8 +8,8 @@ tailwind.config = {
                        'brand-accent': '#6941c6',
                    },
                    fontFamily: {
-                       'sans': ['Lato', 'sans-serif'],
-                       'serif': ['Playfair Display', 'serif'],
+                       'sans': ['Inter', 'ssystem-ui', 'sans-serif'],
+                     
                    }
                }
            }

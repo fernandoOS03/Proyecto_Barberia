@@ -40,7 +40,14 @@ public class HorarioController {
         model.addAttribute("horario", new Horario());
         model.addAttribute("barberoList", barberoService.getAll());
         model.addAttribute("type", "N");
-        return "horarios/horario";
+        
+        model.addAttribute("pageTitle", "Horarios");
+        model.addAttribute("pageSubtitle", "Definir Nuevo Horario");
+        model.addAttribute("content", "horarios/horario");
+        
+        return "layouts/main-layout";
+        
+ 
     }
 
     @GetMapping("/edit-horario/{id}")

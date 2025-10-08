@@ -43,7 +43,7 @@ public class CitaController {
         return "layouts/main-layout";
     }
 
-    @GetMapping("/new-cita")
+    @GetMapping("/citas/nuevo")
     public String showNuevaCita(Model model) {
         model.addAttribute("cita", new Cita());
         model.addAttribute("clienteList", clienteService.getAll());
@@ -52,8 +52,10 @@ public class CitaController {
         model.addAttribute("estadoList", EstadoCita.values());
         model.addAttribute("estadoPagoList", EstadoPago.values());
         model.addAttribute("type", "N");
-        //return "cita";
-        return "citas/cita";
+        model.addAttribute("pageTitle", "Nueva cita");
+        model.addAttribute("pageTitle", "Agregar una nueva cita");
+        model.addAttribute("content", "citas/cita"); 
+        return "layouts/main-layout";
     }
 
     @GetMapping("/edit-cita/{id}")
@@ -136,21 +138,25 @@ public class CitaController {
     }
 
     // Consulta historial de citas por cliente
-    @GetMapping("/consulta-historial-citas")
+    @GetMapping("/historial-citas")
     public String showConsultaHistorialCitas(Model model) {
         model.addAttribute("cliente", new Cliente());
         model.addAttribute("clienteList", clienteService.getAll());
         model.addAttribute("citas", null);
-        //return "consulta-historial-citas";
-        return "consultas/consulta-historial-citas";
+        model.addAttribute("pageTitle", "Consulta Citas");
+        model.addAttribute("pageSubtitle", "Ver horarios de Citas");
+        model.addAttribute("content", "consultas/consulta-historial-citas");
+        return "layouts/main-layout";
     }
 
-    @PostMapping("/consulta-historial-citas")
+    @PostMapping("/historial-citas")
     public String procesarConsultaHistorialCitas(@ModelAttribute Cliente cliente, Model model) {
         model.addAttribute("cliente", cliente);
         model.addAttribute("clienteList", clienteService.getAll());
         model.addAttribute("citas", citaService.listarPorCliente(cliente.getIdCliente()));
-        //return "consulta-historial-citas";
-        return "consultas/consulta-historial-citas";
+        model.addAttribute("pageTitle", "Consultar Citas");
+        model.addAttribute("pageSubtitle", "Ver historial de Citas");
+        model.addAttribute("content", "consultas/consulta-historial-citas");
+        return "layouts/main-layout";
     }
 }

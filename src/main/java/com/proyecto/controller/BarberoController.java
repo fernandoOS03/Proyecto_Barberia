@@ -53,12 +53,15 @@ public class BarberoController {
         return "layouts/main-layout";
     }
     
-    @GetMapping("/new-barbero")
+    @GetMapping("/barberos/nuevo")
     public String showNuevoBarbero(Model model) {
         model.addAttribute("barbero", new Barbero());
         model.addAttribute("type", "N");
-        //return "barbero";
-        return "barberos/barbero";
+        model.addAttribute("pageTitle", "Nuevo Barbero");
+        model.addAttribute("pageTitle", "Agregar un nuevo barbero");
+        model.addAttribute("content", "barberos/barbero");
+        
+        return "layouts/main-layout";
     }
 
     @GetMapping("/edit-barbero/{id}")
@@ -67,50 +70,47 @@ public class BarberoController {
             Barbero barbero = barberoService.getBarbero(id);
             model.addAttribute("barbero", barbero);
             model.addAttribute("type", "E");
+            model.addAttribute("pageTitle", "Barberos");
+            model.addAttribute("pageSubtitle", "Editar Barbero");
+            model.addAttribute("content", "barberos/barbero");
         } catch (Exception e) {
             e.printStackTrace();
+            return "redirect:/barberos";
         }
-        //return "barbero";
-        return "barberos/barbero";
+    
+        return "layouts/main-layouts";
     }
 
-    @GetMapping("/view-barbero/{id}")
+    @GetMapping("/barberos/ver/{id}")
     public String showViewBarbero(@PathVariable("id") Integer id, Model model) {
         try {
             Barbero barbero = barberoService.getBarbero(id);
             model.addAttribute("barbero", barbero);
             model.addAttribute("type", "V");
+            model.addAttribute("pageTitle", "Barberos");
+            model.addAttribute("pageSubtitle","Detalles del Barbero");
+            model.addAttribute("content","barberos/barbero");
         } catch (Exception e) {
             e.printStackTrace();
+            return "redirect:/barberos";
         }
         //return "barbero";
-        return "barberos/barbero";
+        return "layouts/main-layout";
       
     }
 
-    @GetMapping("/remove-barbero/{id}")
+    @GetMapping("/barberos/eliminar/{id}")
     public String removeBarbero(@PathVariable("id") Integer id, RedirectAttributes redirectAttrs) {
         boolean eliminado = barberoService.eliminar(id);
         if (!eliminado) {
-            redirectAttrs.addFlashAttribute("errorEliminacion", true);
-            //return "redirect:/barbero-list";
-            return "redirect:/barberos/barbero-list";
-        }
-        //return "redirect:/barbero-list";
-        return "redirect:/barberos/barbero-list";
+            redirectAttrs.addFlashAttribute("errorEliminacion", true);     
+            //return "redirect:/barberos/barbero-list";
+        }       
+        return "redirect:/barberos";
     }
 
-    /*@PostMapping("/save-new-barbero")
-    public String saveNewBarbero(@ModelAttribute Barbero barbero) {
-        try {
-            barberoService.crear(barbero);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "redirect:/barbero-list";
-    }*/
     
-    @PostMapping("/save-new-barbero")
+    @PostMapping("/barberos/guardar-nuevo")
     public String saveNewBarbero(@ModelAttribute Barbero barbero, RedirectAttributes redirectAttrs) {
         try {
             Barbero nuevo = barberoService.crear(barbero);
@@ -121,7 +121,7 @@ public class BarberoController {
             e.printStackTrace();
         }
         //return "redirect:/barbero-list";
-        return "redirect:/barberos/barbero-list";
+        return "redirect:/barberos";
     }
 
     /*@PostMapping("/save-edit-barbero")
@@ -134,7 +134,7 @@ public class BarberoController {
         return "redirect:/barbero-list";
     }*/
     
-    @PostMapping("/save-edit-barbero")
+    @PostMapping("/barberos/guardar-editar")
     public String saveEditBarbero(@ModelAttribute Barbero barbero, RedirectAttributes redirectAttrs) {
         try {
             barberoService.editar(barbero);
@@ -145,8 +145,9 @@ public class BarberoController {
             e.printStackTrace();
         }
         //return "redirect:/barbero-list";
-        return "redirect:/barberos/barbero-list";
+        return "redirect:/barberos";
     }
+    
     @GetMapping("/barbero-report")
     @ResponseBody
     public void barberoReport(HttpServletResponse response) throws SQLException, JRException, IOException {

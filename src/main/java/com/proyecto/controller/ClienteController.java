@@ -17,83 +17,89 @@ import com.proyecto.service.ClienteService;
 @Controller
 public class ClienteController {
 
-	@Autowired
-	private ClienteService clienteService;
+    @Autowired
+    private ClienteService clienteService;
 
-	@GetMapping("/clientes")
-	public String listaClientes(Model model) {
-	    List<Cliente> clienteList = clienteService.getAll();
-	    model.addAttribute("clienteList", clienteList);
-	    model.addAttribute("pageTitle", "Clientes");
-	    model.addAttribute("pageSubtitle", "Administración de clientes");
-	    model.addAttribute("content", "clientes/cliente-list"); // ← CORRECTO
-	    
-	    return "layouts/main-layout";
-	}
-	
-	@GetMapping("/new-cliente")
-	public String showNuevoCliente(Model model) {
-		model.addAttribute("cliente", new Cliente());
-		model.addAttribute("type", "N");
+    @GetMapping("/clientes")
+    public String listaClientes(Model model) {
+        List<Cliente> clienteList = clienteService.getAll();
+        model.addAttribute("clienteList", clienteList);
+        model.addAttribute("pageTitle", "Clientes");
+        model.addAttribute("pageSubtitle", "Administración de clientes");
+        model.addAttribute("content", "clientes/cliente-list");
+        
+        return "layouts/main-layout";
+    }
+    
+    @GetMapping("/clientes/nuevo")
+    public String showNuevoCliente(Model model) {
+        model.addAttribute("cliente", new Cliente());
+        model.addAttribute("type", "N");
+        model.addAttribute("pageTitle", "Clientes");
+        model.addAttribute("pageSubtitle", "Agregar un nuevo Cliente"); // Corregido: era pageTitle duplicado
+        model.addAttribute("content", "clientes/cliente");
+        return "layouts/main-layout";
+    }
 
-		return "clientes/cliente";
-	}
+    @GetMapping("/clientes/editar/{id}") // CORREGIDO: consistencia en rutas
+    public String showEditCliente(@PathVariable("id") Integer id, Model model) {
+        try {
+            model.addAttribute("cliente", clienteService.getCliente(id));
+            model.addAttribute("type", "E");
+            model.addAttribute("pageTitle", "Clientes");
+            model.addAttribute("pageSubtitle", "Editar Cliente");
+            model.addAttribute("content", "clientes/cliente");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/clientes";
+        }
+        return "layouts/main-layout"; // CORREGIDO: retornar el layout completo
+    }
+    
 
-	@GetMapping("/edit-cliente/{id}")
-	public String showEditCliente(@PathVariable("id") Integer id, Model model) {
-		try {
-			model.addAttribute("cliente", clienteService.getCliente(id));
-			model.addAttribute("type", "E");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    @GetMapping("/clientes/ver/{id}") // CORREGIDO: consistencia en rutas
+    public String showViewCliente(@PathVariable("id") Integer id, Model model) {
+        try {
+            model.addAttribute("cliente", clienteService.getCliente(id));
+            model.addAttribute("type", "V");
+            model.addAttribute("pageTitle", "Clientes");
+            model.addAttribute("pageSubtitle", "Detalle del Cliente");
+            model.addAttribute("content", "clientes/cliente");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/clientes";
+        }
+        return "layouts/main-layout"; // CORREGIDO: retornar el layout completo
+    }
 
-		return "clientes/cliente";
-	}
+    @GetMapping("/clientes/eliminar/{id}") // CORREGIDO: consistencia en rutas
+    public String removeCliente(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        boolean eliminado = clienteService.eliminar(id);
+        if (!eliminado) {
+            redirectAttributes.addFlashAttribute("errorEliminacion", true);
+        }
+        return "redirect:/clientes"; // CORREGIDO: redirigir a la URL correcta
+    }
 
-	@GetMapping("/view-cliente/{id}")
-	public String showViewCliente(@PathVariable("id") Integer id, Model model) {
-		try {
-			model.addAttribute("cliente", clienteService.getCliente(id));
-			model.addAttribute("type", "V");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		// return "cliente";
-		return "clientes/cliente";
-	}
+    @PostMapping("/clientes/guardar-nuevo")
+    public String saveNewCliente(@ModelAttribute Cliente cliente, RedirectAttributes redirectAttributes) {
+        try {
+            clienteService.crear(cliente);
+            redirectAttributes.addFlashAttribute("clienteAgregado", true);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorCliente", e.getMessage());
+        }
+        return "redirect:/clientes"; // CORREGIDO: redirigir a la URL correcta
+    }
 
-	@GetMapping("/remove-cliente/{id}")
-	public String removeCliente(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
-		boolean eliminado = clienteService.eliminar(id);
-		if (!eliminado) {
-			redirectAttributes.addFlashAttribute("errorEliminacion", true);
-		}
-		return "redirect:/clientes/cliente-list";
-		// return "redirect:/cliente-list";
-	}
-
-	@PostMapping("/save-new-cliente")
-	public String saveNewCliente(@ModelAttribute Cliente cliente, RedirectAttributes redirectAttributes) {
-		try {
-			clienteService.crear(cliente);
-			redirectAttributes.addFlashAttribute("clienteAgregado", true);
-		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("errorCliente", e.getMessage());
-		}
-		return "redirect:/clientes/cliente-list";
-		// return "redirect:/cliente-list";
-	}
-
-	@PostMapping("/save-edit-cliente")
-	public String saveEditCliente(@ModelAttribute Cliente cliente, RedirectAttributes redirectAttributes) {
-		try {
-			clienteService.editar(cliente);
-			redirectAttributes.addFlashAttribute("clienteEditado", true);
-		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("errorCliente", e.getMessage());
-		}
-		// return "redirect:/cliente-list";
-		return "redirect:/clientes/cliente-list";
-	}
+    @PostMapping("/clientes/guardar-editar") // CORREGIDO: consistencia en nombres
+    public String saveEditCliente(@ModelAttribute Cliente cliente, RedirectAttributes redirectAttributes) {
+        try {
+            clienteService.editar(cliente);
+            redirectAttributes.addFlashAttribute("clienteEditado", true);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorCliente", e.getMessage());
+        }
+        return "redirect:/clientes"; // CORREGIDO: redirigir a la URL correcta
+    }
 }

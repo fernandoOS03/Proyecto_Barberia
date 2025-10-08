@@ -35,12 +35,17 @@ public class PagoController {
         return "layouts/main-layout";
     }
 
-    @GetMapping("/new-pago")
+    @GetMapping("/pagos/nuevo")
     public String showNuevoPago(Model model) {
         model.addAttribute("pago", new Pago());
         model.addAttribute("citaList", citaService.obtenerCitasPendientesPago());
         model.addAttribute("type", "N");
-        return "pagos/pago";
+        model.addAttribute("pageTitle", "Pagos");
+        model.addAttribute("pageSubtitle", "Registrar nuevo pago");
+        model.addAttribute("content", "pagos/pago");
+        
+        return "layouts/main-layout";
+
     }
 
     @GetMapping("/edit-pago/{id}")

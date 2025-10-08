@@ -1,100 +1,91 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Horario</title>
+<div th:fragment="content">
+	<!-- Contenedor del Formulario -->
+	<div
+		class="bg-background-secondary p-8 rounded-2xl shadow-2xl w-full max-w-lg">
 
-    <!-- 1. Google Fonts: Playfair Display y Lato -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+		<!-- Título dinámico -->
+		<header class="mb-8 text-center">
+			<h1 class="font-serif text-4xl font-bold text-text-primary"
+				th:if="${type == 'N'}">Registrar Horario</h1>
+			<h1 class="font-serif text-4xl font-bold text-text-primary"
+				th:if="${type == 'E'}">Editar Horario</h1>
+			<h1 class="font-serif text-4xl font-bold text-text-primary"
+				th:if="${type == 'V'}">Detalle de Horario</h1>
+		</header>
 
-    <!-- 2. Cargar el CDN de Tailwind y la configuración personalizada -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script th:src="@{/js/tailwind-config.js}"></script>
+		<!-- Formulario -->
+		<form
+			th:action="${type == 'N'} ? @{/save-new-horario} : @{/save-edit-horario}"
+			th:object="${horario}" method="post" class="space-y-6">
 
-    <style>
-        /* Estilos para que los select y los input de fecha/hora se vean bien en tema oscuro */
-        select, input[type="time"] {
-            color-scheme: dark;
-        }
-    </style>
+			<!-- Código -->
+			<div>
+				<label class="block mb-2 text-sm font-bold text-text-primary/80">Código</label>
+				<input type="text" th:field="*{idHorario}" readonly
+					class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 text-text-primary/60 cursor-not-allowed">
+			</div>
 
-</head>
-<body class="bg-background-primary font-sans flex items-center justify-center min-h-screen p-4">
+			<!-- Día -->
+			<div>
+				<label class="block mb-2 text-sm font-bold text-text-primary/80">Día
+					de la Semana</label> <select th:field="*{diaSemana}"
+					th:disabled="${type.equals('V')}"
+					class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
+					th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
+					<option
+						th:each="dia : ${T(com.proyecto.entity.DiaSemana).values()}"
+						th:value="${dia}" th:text="${dia}"></option>
+				</select>
+			</div>
 
-    <!-- Contenedor del Formulario -->
-    <div class="bg-background-secondary p-8 rounded-2xl shadow-2xl w-full max-w-lg">
-        
-        <!-- Título dinámico -->
-        <header class="mb-8 text-center">
-            <h1 class="font-serif text-4xl font-bold text-text-primary" th:if="${type == 'N'}">Registrar Horario</h1>
-            <h1 class="font-serif text-4xl font-bold text-text-primary" th:if="${type == 'E'}">Editar Horario</h1>
-            <h1 class="font-serif text-4xl font-bold text-text-primary" th:if="${type == 'V'}">Detalle de Horario</h1>
-        </header>
+			<!-- Grid para Hora Inicio y Hora Fin -->
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+				<div>
+					<label class="block mb-2 text-sm font-bold text-text-primary/80">Hora
+						Inicio</label> <input type="time" th:field="*{horaInicio}"
+						th:readonly="${type.equals('V')}"
+						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
+						th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
+				</div>
+				<div>
+					<label class="block mb-2 text-sm font-bold text-text-primary/80">Hora
+						Fin</label> <input type="time" th:field="*{horaFin}"
+						th:readonly="${type.equals('V')}"
+						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
+						th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
+				</div>
+			</div>
 
-        <!-- Formulario -->
-        <form th:action="${type == 'N'} ? @{/save-new-horario} : @{/save-edit-horario}"
-              th:object="${horario}" method="post" class="space-y-6">
+			<!-- Barbero -->
+			<div>
+				<label class="block mb-2 text-sm font-bold text-text-primary/80">Barbero</label>
+				<div th:if="${type.equals('V')}">
+					<input type="text"
+						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 text-text-primary/60 cursor-not-allowed"
+						th:value="${horario.barbero.nombreBarbero}" readonly>
+				</div>
+				<div th:if="${!type.equals('V')}">
+					<select
+						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
+						th:field="*{barbero.idBarbero}">
+						<option value="">-- Seleccione --</option>
+						<option th:each="barbero : ${barberoList}"
+							th:value="${barbero.idBarbero}"
+							th:text="${barbero.nombreBarbero}"
+							th:selected="${barbero.idBarbero == horario.barbero.idBarbero}">
+						</option>
+					</select>
+				</div>
+			</div>
 
-            <!-- Código -->
-            <div>
-                <label class="block mb-2 text-sm font-bold text-text-primary/80">Código</label>
-                <input type="text" th:field="*{idHorario}" readonly
-                       class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 text-text-primary/60 cursor-not-allowed">
-            </div>
-
-            <!-- Día -->
-            <div>
-                <label class="block mb-2 text-sm font-bold text-text-primary/80">Día de la Semana</label>
-                <select th:field="*{diaSemana}" th:disabled="${type.equals('V')}"
-                        class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-                        th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
-                    <option th:each="dia : ${T(com.proyecto.entity.DiaSemana).values()}" th:value="${dia}" th:text="${dia}"></option>
-                </select>
-            </div>
-
-            <!-- Grid para Hora Inicio y Hora Fin -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-text-primary/80">Hora Inicio</label>
-                    <input type="time" th:field="*{horaInicio}" th:readonly="${type.equals('V')}"
-                           class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-                           th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-text-primary/80">Hora Fin</label>
-                    <input type="time" th:field="*{horaFin}" th:readonly="${type.equals('V')}"
-                           class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-                           th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
-                </div>
-            </div>
-
-            <!-- Barbero -->
-            <div>
-                <label class="block mb-2 text-sm font-bold text-text-primary/80">Barbero</label>
-                <div th:if="${type.equals('V')}">
-                    <input type="text" class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 text-text-primary/60 cursor-not-allowed" 
-                           th:value="${horario.barbero.nombreBarbero}" readonly>
-                </div>
-                <div th:if="${!type.equals('V')}">
-                    <select class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors" 
-                            th:field="*{barbero.idBarbero}">
-                        <option value="">-- Seleccione --</option>
-                        <option th:each="barbero : ${barberoList}" th:value="${barbero.idBarbero}"
-                                th:text="${barbero.nombreBarbero}" th:selected="${barbero.idBarbero == horario.barbero.idBarbero}">
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Botones -->
-            <div class="flex justify-between items-center pt-4">
-                <button type="submit" class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20" th:if="${type != 'V'}">Guardar</button>
-                <a th:href="@{/horario-list}" class="py-2.5 px-6 rounded-lg border border-text-primary/30 text-text-primary/80 font-semibold hover:bg-background-primary hover:border-text-primary/60 transition-all flex items-center">Cancelar</a>
-            </div>
-        </form>
-    </div>
-</body>
-</html>
+			<!-- Botones -->
+			<div class="flex justify-between items-center pt-4">
+				<button type="submit"
+					class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20"
+					th:if="${type != 'V'}">Guardar</button>
+				<a th:href="@{/horario-list}"
+					class="py-2.5 px-6 rounded-lg border border-text-primary/30 text-text-primary/80 font-semibold hover:bg-background-primary hover:border-text-primary/60 transition-all flex items-center">Cancelar</a>
+			</div>
+		</form>
+	</div>
+</div>

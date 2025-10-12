@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  },
+  "scripts": {
+    "dev": "tailwindcss -i ./src/main/resources/static/css/tailwind.css -o ./src/main/resources/static/css/tailwind-output.css --watch",
+    "build": "tailwindcss -i ./src/main/resources/static/css/tailwind.css -o ./src/main/resources/static/css/tailwind-output.css --minify"
+  }
+}

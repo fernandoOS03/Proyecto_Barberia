@@ -64,11 +64,10 @@ public class BarberoController {
         return "layouts/main-layout";
     }
 
-    @GetMapping("/edit-barbero/{id}")
+    @GetMapping("/barberos/editar/{id}")
     public String showEditBarbero(@PathVariable("id") Integer id, Model model) {
         try {
-            Barbero barbero = barberoService.getBarbero(id);
-            model.addAttribute("barbero", barbero);
+            model.addAttribute("barbero", barberoService.getBarbero(id));
             model.addAttribute("type", "E");
             model.addAttribute("pageTitle", "Barberos");
             model.addAttribute("pageSubtitle", "Editar Barbero");
@@ -78,7 +77,7 @@ public class BarberoController {
             return "redirect:/barberos";
         }
     
-        return "layouts/main-layouts";
+        return "layouts/main-layout";
     }
 
     @GetMapping("/barberos/ver/{id}")
@@ -123,28 +122,16 @@ public class BarberoController {
         //return "redirect:/barbero-list";
         return "redirect:/barberos";
     }
-
-    /*@PostMapping("/save-edit-barbero")
-    public String saveEditBarbero(@ModelAttribute Barbero barbero) {
-        try {
-            barberoService.editar(barbero);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "redirect:/barbero-list";
-    }*/
     
     @PostMapping("/barberos/guardar-editar")
     public String saveEditBarbero(@ModelAttribute Barbero barbero, RedirectAttributes redirectAttrs) {
         try {
             barberoService.editar(barbero);
             redirectAttrs.addFlashAttribute("barberoEditado", true);
-            redirectAttrs.addFlashAttribute("nombre", barbero.getNombreBarbero());
-            redirectAttrs.addFlashAttribute("codigo", barbero.getIdBarbero());
+          
         } catch (Exception e) {
-            e.printStackTrace();
+            redirectAttrs.addFlashAttribute("errorBarbero", e.getMessage());
         }
-        //return "redirect:/barbero-list";
         return "redirect:/barberos";
     }
     

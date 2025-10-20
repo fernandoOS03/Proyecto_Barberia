@@ -77,7 +77,7 @@ public class HorarioController {
     @GetMapping("/remove-horario/{id}")
     public String removeHorario(@PathVariable("id") Integer id) {
         horarioService.eliminar(id);
-        return "redirect:/horarios/horario-list";
+        return "redirect:/horarios";
     }
 
     @PostMapping("/save-new-horario")
@@ -87,7 +87,7 @@ public class HorarioController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/horarios/horario-list";
+        return "redirect:/horarios";
     }
 
     @PostMapping("/save-edit-horario")
@@ -97,7 +97,7 @@ public class HorarioController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/horarios/horario-list";
+        return "redirect:/horarios";
     }
 
     /*public String showConsultaHorarios(Model model) {

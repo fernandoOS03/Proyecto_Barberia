@@ -101,7 +101,7 @@ public class CitaController {
 		return "layouts/main-layout";
 	}
 
-	@GetMapping("/remove-cita/{id}")
+	@GetMapping("/citas/eliminar/{id}")
 	public String removeCita(@PathVariable("id") Integer id, RedirectAttributes redirectAttrs) {
 		try {
 			Cita cita = citaService.getCita(id);
@@ -109,7 +109,7 @@ public class CitaController {
 				redirectAttrs.addFlashAttribute("errorEliminacion",
 						"La cita no puede ser eliminada porque ya ha sido pagada.");
 				// return "redirect:/cita-list";
-				return "redirect:/citas/cita-list";
+				return "redirect:/citas";
 			}
 			citaService.eliminar(id);
 			redirectAttrs.addFlashAttribute("citaEliminada", true);
@@ -117,8 +117,7 @@ public class CitaController {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("errorEliminacion", "Ocurrió un error al eliminar la cita.");
 		}
-		// return "redirect:/cita-list";
-		return "redirect:/citas/cita-list";
+		return "redirect:/citas";
 	}
 
 	@PostMapping("/save-new-cita")
@@ -130,7 +129,7 @@ public class CitaController {
 			e.printStackTrace();
 		}
 		// return "redirect:/cita-list";
-		return "redirect:/citas/cita-list";
+		return "redirect:/citas";
 	}
 
 	@PostMapping("/save-edit-cita")
@@ -142,7 +141,7 @@ public class CitaController {
 			e.printStackTrace();
 		}
 		// return "redirect:/cita-list";
-		return "redirect:/citas/cita-list";
+		return "redirect:/citas";
 	}
 
 	// Consulta historial de citas por cliente
@@ -157,7 +156,7 @@ public class CitaController {
 		return "layouts/main-layout";
 	}
 
-	@PostMapping("/historial-citas")
+	@PostMapping("/historiall-citas")
 	public String procesarConsultaHistorialCitas(@ModelAttribute Cliente cliente, Model model) {
 		model.addAttribute("cliente", cliente);
 		model.addAttribute("clienteList", clienteService.getAll());

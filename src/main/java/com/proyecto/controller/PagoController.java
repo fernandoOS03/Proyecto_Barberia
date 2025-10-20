@@ -48,7 +48,7 @@ public class PagoController {
 
     }
 
-    @GetMapping("/edit-pago/{id}")
+    @GetMapping("/pagos/editar/{id}")
     public String showEditPago(@PathVariable("id") Integer id, Model model) {
         try {
             model.addAttribute("pago", pagoService.getPago(id));
@@ -60,7 +60,7 @@ public class PagoController {
         return "pagos/pago";
     }
 
-    @GetMapping("/view-pago/{id}")
+    @GetMapping("/pagos/ver/{id}")
     public String showViewPago(@PathVariable("id") Integer id, Model model) {
         try {
             model.addAttribute("pago", pagoService.getPago(id));
@@ -72,10 +72,10 @@ public class PagoController {
         return "pagos/pago";
     }
 
-    @GetMapping("/remove-pago/{id}")
+    @GetMapping("/pagos/eliminar/{id}")
     public String removePago(@PathVariable("id") Integer id) {
         pagoService.eliminar(id);
-        return "redirect:/pagos/pago-list";
+        return "redirect:/pagos";
     }
 
     @PostMapping("/save-new-pago")
@@ -88,7 +88,7 @@ public class PagoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/pagos/pago-list";
+        return "redirect:/pagos";
     }
 
     @PostMapping("/save-edit-pago")
@@ -99,6 +99,6 @@ public class PagoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/pagos/pago-list";
+        return "redirect:/pagos";
     }
 }

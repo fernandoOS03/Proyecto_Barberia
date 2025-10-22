@@ -54,10 +54,14 @@ public class PagoController {
             model.addAttribute("pago", pagoService.getPago(id));
             model.addAttribute("citaList", citaService.getAll());
             model.addAttribute("type", "E");
+            model.addAttribute("pageTitle", "Pagos");
+            model.addAttribute("pageSubtitle", "Editar Pago");
+            model.addAttribute("content", "pagos/pago");
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "pagos/pago";
+        return "layouts/main-layout";
     }
 
     @GetMapping("/pagos/ver/{id}")
@@ -66,10 +70,13 @@ public class PagoController {
             model.addAttribute("pago", pagoService.getPago(id));
             model.addAttribute("citaList", citaService.getAll());
             model.addAttribute("type", "V");
+            model.addAttribute("pageTitle", "Pagos");
+            model.addAttribute("pageSubtitle", "Detalle del pago");
+            model.addAttribute("content", "pagos/pago");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "pagos/pago";
+        return "layouts/main-layout";
     }
 
     @GetMapping("/pagos/eliminar/{id}")

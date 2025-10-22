@@ -53,7 +53,7 @@ public class CitaController {
 		model.addAttribute("estadoPagoList", EstadoPago.values());
 		model.addAttribute("type", "N");
 		model.addAttribute("pageTitle", "Nueva cita");
-		model.addAttribute("pageTitle", "Agregar una nueva cita");
+		model.addAttribute("pageSubtitle", "Agregar una nueva cita");
 		model.addAttribute("content", "citas/cita");
 		return "layouts/main-layout";
 	}
@@ -75,7 +75,6 @@ public class CitaController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// return "cita";
 		return "layouts/main-layout";
 	}
 
@@ -108,7 +107,6 @@ public class CitaController {
 			if (cita.getEstadoPago() != null && cita.getEstadoPago().toString().equals("Pagado")) {
 				redirectAttrs.addFlashAttribute("errorEliminacion",
 						"La cita no puede ser eliminada porque ya ha sido pagada.");
-				// return "redirect:/cita-list";
 				return "redirect:/citas";
 			}
 			citaService.eliminar(id);
@@ -128,7 +126,6 @@ public class CitaController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// return "redirect:/cita-list";
 		return "redirect:/citas";
 	}
 
@@ -140,7 +137,6 @@ public class CitaController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// return "redirect:/cita-list";
 		return "redirect:/citas";
 	}
 

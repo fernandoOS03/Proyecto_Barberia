@@ -54,11 +54,13 @@ public class ServicioController {
     @GetMapping("/new-servicio")
     public String nuevoServicio(Model model) {
         Servicio servicio = new Servicio();
-        // Solución: Generar un ID temporal o usar un valor por defecto
-        servicio.setIdServicio(0); // O puedes usar un ID generado automáticamente
+        servicio.setIdServicio(0); 
         model.addAttribute("servicio", servicio);
         model.addAttribute("type", "N");
-        return "servicio";
+        model.addAttribute("pageTitle", "Servicio");
+        model.addAttribute("pageSubtitle", "Agregar un nuevo servicio");
+        model.addAttribute("content", "servicios/servicio");
+        return "layouts/main-layout";
     }
 
     @GetMapping("/edit-servicio/{id}")
@@ -67,13 +69,15 @@ public class ServicioController {
             Servicio servicio = servicioService.getServicio(id);
             model.addAttribute("servicio", servicio);
             model.addAttribute("type", "E");
+            model.addAttribute("pageTitle", "Servicio");
+            model.addAttribute("pageSubtitle", "Editar ddel servicio");
+            model.addAttribute("content", "servicios/servicio");
         } catch (Exception e) {
             e.printStackTrace();
-            // Mejor manejo de errores
             model.addAttribute("errorServicio", "No se pudo cargar el servicio");
-            return "redirect:/servicio-list";
+            return "redirect:/servicios";
         }
-        return "servicio";
+        return "layouts/main-layout";
     }
 
     @GetMapping("/view-servicio/{id}")
@@ -82,10 +86,13 @@ public class ServicioController {
             Servicio servicio = servicioService.getServicio(id);
             model.addAttribute("servicio", servicio);
             model.addAttribute("type", "V");
+            model.addAttribute("pageTitle", "Servicio");
+            model.addAttribute("pageSubtitle", "Detalle ddel servicio");
+            model.addAttribute("content", "servicios/servicio");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "servicio";
+        return "layouts/main-layout";
     }
 
     @GetMapping("/remove-servicio/{id}")
@@ -100,20 +107,19 @@ public class ServicioController {
                 redirectAttrs.addFlashAttribute("errorServicio", "No se pudo eliminar el servicio.");
             }
         }
-        return "redirect:/servicio-list";
+        return "redirect:/servicios";
     }
 
     @PostMapping("/save-new-servicio")
     public String saveNewServicio(@ModelAttribute Servicio servicio, RedirectAttributes redirectAttrs) {
         try {
-            // Al crear un nuevo servicio, no necesitas el ID
-            servicio.setIdServicio(null); // Dejar que la base de datos genere el ID
+            servicio.setIdServicio(null);
             servicioService.crear(servicio);
             redirectAttrs.addFlashAttribute("servicioAgregado", true);
         } catch (Exception e) {
             redirectAttrs.addFlashAttribute("errorServicio", e.getMessage());
         }
-        return "redirect:/servicio-list";
+        return "redirect:/servicios";
     }
 
     @PostMapping("/save-edit-servicio")
@@ -124,7 +130,7 @@ public class ServicioController {
         } catch (Exception e) {
             redirectAttrs.addFlashAttribute("errorServicio", e.getMessage());
         }
-        return "redirect:/servicio-list";
+        return "redirect:/servicios";
     }
     @GetMapping("/servicio-report")
     @ResponseBody

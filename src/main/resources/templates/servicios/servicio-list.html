@@ -1,189 +1,222 @@
 <div th:fragment="content">
-    <!-- Contenedor Principal -->
-    <main class="container mx-auto px-4 py-6">
-        <!-- Botones de acción -->
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
-            <div class="flex gap-4">
-                <a th:href="@{/new-servicio}"
-                   class="py-3 px-8 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-all flex items-center shadow-md hover:shadow-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M17 9a2 2 0 00-2-2h-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v2H5a2 2 0 00-2 2v2a2 2 0 002 2h2v2a2 2 0 002 2h2a2 2 0 002-2v-2h2a2 2 0 002-2V9z" />
-                    </svg> Agregar Servicio
-                </a>
-                <a th:href="@{/servicio-report}"
-                   class="py-3 px-8 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition-all flex items-center shadow-md hover:shadow-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                              d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                              clip-rule="evenodd" />
-                    </svg> Generar Reporte
-                </a>
-            </div>
-            <a th:href="@{/}"
-               class="py-3 px-6 rounded-lg border border-gray-300 text-gray-700 font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                          d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
-                          clip-rule="evenodd" />
-                </svg> Volver al Inicio
-            </a>
-        </div>
+	<!-- Contenedor Principal -->
+	<main class="container mx-auto my-8 px-4">
+	
+		<!-- Botones de acción superiores -->
+		<div class="flex flex-wrap justify-between gap-4 mb-8">
+		<div class = "flex gap-4">
+		
+			<a th:href="@{/new-servicio}"
+				class="flex items-center px-4 py-2 rounded-md bg-brand-accent text-white font-sans font-medium text-sm hover:bg-brand-accent/80 transition-colors">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+					viewBox="0 0 20 20" fill="currentColor">
+					<path
+						d="M17 9a2 2 0 00-2-2h-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v2H5a2 2 0 00-2 2v2a2 2 0 002 2h2v2a2 2 0 002 2h2a2 2 0 002-2v-2h2a2 2 0 002-2V9z" /></svg>
+				Nuevo Servicio
+			</a> 
+			
+			<a th:href="@{/servicio-report}"
+				class="flex items-center px-4 py-2 rounded-md bg-green-500 text-white font-sans font-medium text-sm hover:bg-green-600 transition-colors">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+					viewBox="0 0 20 20" fill="currentColor">
+					<path fill-rule="evenodd"
+						d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+						clip-rule="evenodd" /></svg> Generar Reporte
+			</a> 
+			</div>
+			<a th:href="@{/}"
+				
+				class="flex items-center px-4 py-2 rounded-md border border-text-primary/20 text-text-primary font-sans font-medium text-sm hover:bg-background-secondary transition-colors">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+					viewBox="0 0 20 20" fill="currentColor">
+					<path fill-rule="evenodd"
+						d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
+						clip-rule="evenodd" /></svg> Menú Principal
+			</a>
+			
+		</div>
 
-        <!-- Grid de Servicios -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <!-- Tarjeta de Servicio -->
-            <div th:each="servicio : ${servicioList}"
-                 class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-indigo-300 group">
-                <!-- Header de la tarjeta -->
-                <div class="p-6 border-b border-gray-200">
-                    <div class="flex justify-between items-start mb-3">
-                        <h3 class="font-bold text-xl text-gray-800 group-hover:text-indigo-600 transition-colors"
-                            th:text="${servicio.nombreServicio}"></h3>
-                        <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-sm font-semibold">
-                            <span th:text="${servicio.duracionServicio}"></span> min
-                        </span>
-                    </div>
-                    <p class="text-2xl font-bold text-gray-900">
-                        <span th:text="${'S/ ' + #numbers.formatDecimal(servicio.precioServicio, 1, 'COMMA', 2, 'POINT')}"></span>
-                    </p>
-                </div>
+		<!-- Contenedor de tarjetas -->
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+			<div th:each="servicio : ${servicioList}"
+				class="bg-background-secondary rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+				<div class="space-y-3">
+					<h3 class="font-sans font-medium text-lg text-text-primary"
+						th:text="${servicio.nombreServicio}"></h3>
+					<p class="text-sm text-text-primary/80">
+						<span class="font-medium">ID:</span> <span
+							th:text="${servicio.idServicio}"></span>
+					</p>
+					<p class="text-sm text-text-primary/80">
+						<span class="font-medium">Precio:</span> <span
+							th:text="${'S/ ' + #numbers.formatDecimal(servicio.precioServicio, 1, 'COMMA', 2, 'POINT')}"></span>
+					</p>
+					<p class="text-sm text-text-primary/80">
+						<span class="font-medium">Duración:</span> <span
+							th:text="${servicio.duracionServicio + ' min'}"></span>
+					</p>
+					<div class="flex justify-end gap-4 pt-4 w-full">
+						<a th:href="@{/edit-servicio/{id}(id=${servicio.idServicio})}"
+							class="flex items-center px-3 py-1 rounded-md border border-brand-accent text-brand-accent font-sans text-sm hover:bg-brand-accent hover:text-white transition-colors"
+							title="Editar"> Editar </a> <a
+							th:href="@{/view-servicio/{id}(id=${servicio.idServicio})}"
+							class="flex items-center px-3 py-1 rounded-md border border-text-primary/60 text-text-primary/60 font-sans text-sm hover:bg-text-primary/60 hover:text-white transition-colors"
+							title="Ver"> Ver </a>
+						<button
+							th:onclick="'abrirModalEliminarServicio(' + ${servicio.idServicio} + ')'"
+							class="flex items-center px-3 py-1 rounded-md border border-red-500 text-red-500 font-sans text-sm hover:bg-red-500 hover:text-white transition-colors"
+							title="Eliminar">Eliminar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
 
-                <!-- Acciones -->
-                <div class="p-4 flex justify-between items-center">
-                    <div class="flex space-x-2">
-                        <a th:href="@{/view-servicio/{id}(id=${servicio.idServicio})}"
-                           class="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
-                           title="Ver detalles">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                <path fill-rule="evenodd"
-                                      d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.27 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                                      clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                        <a th:href="@{/edit-servicio/{id}(id=${servicio.idServicio})}"
-                           class="p-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
-                           title="Editar">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                <path fill-rule="evenodd"
-                                      d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                      clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </div>
-                    <a href="javascript:void(0)"
-                       class="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                       title="Eliminar"
-                       th:attr="data-id=${servicio.idServicio}, data-nombre=${servicio.nombreServicio}"
-                       onclick="setServicioToDelete(this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                  clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </main>
+	<!-- Formulario oculto para eliminar -->
+	<form id="formEliminarServicio" th:action="@{/remove-servicio/__ID__}"
+		method="get" class="hidden"></form>
 
-    <!-- Modal de confirmación para eliminar -->
-    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg p-6 shadow-lg max-w-md w-full mx-4">
-            <h2 class="text-xl font-bold text-red-600 mb-2">Confirmar Eliminación</h2>
-            <p class="text-gray-700 mb-4">¿Estás seguro de que deseas eliminar el servicio "<span id="servicioNombre" class="font-semibold"></span>"?</p>
-            <div class="flex justify-end space-x-3">
-                <button onclick="document.getElementById('deleteModal').classList.add('hidden')"
-                        class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100 transition-all">
-                    Cancelar
-                </button>
-                <form id="deleteForm" method="post" th:action="@{/remove-servicio/{id}(id=0)}" style="display: inline;">
-                    <button type="submit"
-                            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all">
-                        Eliminar
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
+	<!-- Modal: Servicio Agregado -->
+	<div th:if="${servicioAgregado}" id="modalServicioAgregado"
+		class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+		<div
+			class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+			<h2 class="text-xl font-sans font-semibold text-green-600 mb-2">Servicio
+				registrado</h2>
+			<p class="text-sm text-text-primary/80">El servicio se ha
+				registrado correctamente.</p>
+			<button
+				onclick="document.getElementById('modalServicioAgregado').classList.add('hidden')"
+				class="mt-4 px-4 py-2 rounded-md bg-green-600 text-white font-sans text-sm hover:bg-green-700 transition-colors">Cerrar</button>
+		</div>
+	</div>
 
-    <!-- Modal de éxito al agregar -->
-    <div th:if="${servicioAgregado}"
-         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 shadow-lg text-center max-w-md w-full">
-            <h2 class="text-xl font-bold text-green-600 mb-2">¡Servicio registrado con éxito!</h2>
-            <p class="text-gray-700 mb-4">El servicio se ha registrado correctamente.</p>
-            <button onclick="this.closest('div').classList.add('hidden')"
-                    class="mt-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all">
-                Cerrar
-            </button>
-        </div>
-    </div>
+	<!-- Modal: Servicio Editado -->
+	<div th:if="${servicioEditado}" id="modalServicioEditado"
+		class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+		<div
+			class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+			<h2 class="text-xl font-sans font-semibold text-blue-600 mb-2">Servicio
+				actualizado</h2>
+			<p class="text-sm text-text-primary/80">Los datos del servicio se
+				han actualizado correctamente.</p>
+			<button
+				onclick="document.getElementById('modalServicioEditado').classList.add('hidden')"
+				class="mt-4 px-4 py-2 rounded-md bg-blue-600 text-white font-sans text-sm hover:bg-blue-700 transition-colors">Cerrar</button>
+		</div>
+	</div>
 
-    <!-- Modal: Servicio Editado -->
-    <div th:if="${servicioEditado}"
-         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 shadow-lg text-center max-w-md w-full">
-            <h2 class="text-xl font-bold text-blue-600 mb-2">¡Servicio actualizado!</h2>
-            <p class="text-gray-700 mb-4">Los datos del servicio se han actualizado correctamente.</p>
-            <button onclick="this.closest('div').classList.add('hidden')"
-                    class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all">
-                Cerrar
-            </button>
-        </div>
-    </div>
+	<!-- Modal: Servicio Eliminado -->
+	<div th:if="${servicioEliminado}" id="modalServicioEliminado"
+		class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+		<div
+			class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+			<h2 class="text-xl font-sans font-semibold text-red-600 mb-2">Servicio
+				eliminado</h2>
+			<p class="text-sm text-text-primary/80">El servicio ha sido
+				eliminado correctamente.</p>
+			<button
+				onclick="document.getElementById('modalServicioEliminado').classList.add('hidden')"
+				class="mt-4 px-4 py-2 rounded-md bg-red-600 text-white font-sans text-sm hover:bg-red-700 transition-colors">Cerrar</button>
+		</div>
+	</div>
 
-    <!-- Modal: Servicio Eliminado -->
-    <div th:if="${servicioEliminado}"
-         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 shadow-lg text-center max-w-md w-full">
-            <h2 class="text-xl font-bold text-red-600 mb-2">¡Servicio eliminado!</h2>
-            <p class="text-gray-700 mb-4">El servicio ha sido eliminado correctamente.</p>
-            <button onclick="this.closest('div').classList.add('hidden')"
-                    class="mt-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all">
-                Cerrar
-            </button>
-        </div>
-    </div>
+	<!-- Modal: Error al eliminar por citas existentes -->
+	<div th:if="${errorEliminacionServicio}"
+		id="modalErrorEliminacionServicio"
+		class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+		<div
+			class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+			<h2 class="text-xl font-sans font-semibold text-orange-600 mb-2">No
+				se puede eliminar</h2>
+			<p class="text-sm text-text-primary/80">El servicio tiene citas
+				registradas y no puede ser eliminado.</p>
+			<button
+				onclick="document.getElementById('modalErrorEliminacionServicio').classList.add('hidden')"
+				class="mt-4 px-4 py-2 rounded-md bg-orange-600 text-white font-sans text-sm hover:bg-orange-700 transition-colors">Cerrar</button>
+		</div>
+	</div>
 
-    <!-- Modal: Error al eliminar -->
-    <div th:if="${errorEliminacion}"
-         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 shadow-lg text-center max-w-md w-full">
-            <h2 class="text-xl font-bold text-red-500 mb-2">No se puede eliminar</h2>
-            <p class="text-gray-700 mb-4" th:text="${errorEliminacion}">El servicio no puede ser eliminado.</p>
-            <button onclick="this.closest('div').classList.add('hidden')"
-                    class="mt-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all">
-                Cerrar
-            </button>
-        </div>
-    </div>
+	<!-- Modal: Error genérico -->
+	<div th:if="${errorServicio}" id="modalErrorServicio"
+		class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+		<div
+			class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+			<h2 class="text-xl font-sans font-semibold text-red-500 mb-2">Error</h2>
+			<p class="text-sm text-text-primary/80" th:text="${errorServicio}"></p>
+			<button
+				onclick="document.getElementById('modalErrorServicio').classList.add('hidden')"
+				class="mt-4 px-4 py-2 rounded-md bg-red-600 text-white font-sans text-sm hover:bg-red-700 transition-colors">Cerrar</button>
+		</div>
+	</div>
 
-    <script>
-        function setServicioToDelete(element) {
-            const id = element.getAttribute('data-id');
-            const nombre = element.getAttribute('data-nombre');
-            
-            document.getElementById('servicioNombre').textContent = nombre;
-            document.getElementById('deleteForm').action = `/delete-servicio/${id}`;
-            document.getElementById('deleteModal').classList.remove('hidden');
+	<!-- Modal de confirmación para eliminar -->
+	<div id="modalConfirmacionEliminarServicio"
+		class="fixed inset-0 bg-black/30 z-50 hidden flex items-center justify-center">
+		<div
+			class="bg-background-primary p-6 rounded-lg shadow-sm w-full max-w-sm">
+			<h2
+				class="text-lg font-sans font-semibold text-red-600 mb-3 text-center">¿Eliminar
+				este servicio?</h2>
+			<p class="text-sm text-text-primary/80 text-center mb-4">Esta
+				acción no se puede deshacer.</p>
+			<div class="flex justify-center gap-3">
+				<button onclick="cerrarModalEliminarServicio()"
+					class="px-4 py-2 rounded-md bg-background-secondary text-text-primary font-sans text-sm hover:bg-background-secondary/80 transition-colors">Cancelar</button>
+				<button onclick="confirmarEliminarServicio()"
+					class="px-4 py-2 rounded-md bg-red-500 text-white font-sans text-sm hover:bg-red-600 transition-colors">Eliminar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+        let servicioIdEliminar = null;
+
+        function abrirModalEliminarServicio(id) {
+            servicioIdEliminar = id;
+            const modal = document.getElementById("modalConfirmacionEliminarServicio");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
         }
 
-        // Cierre automático de modales después de 4 segundos
+        function cerrarModalEliminarServicio() {
+            const modal = document.getElementById("modalConfirmacionEliminarServicio");
+            modal.classList.remove("flex");
+            modal.classList.add("hidden");
+            servicioIdEliminar = null;
+        }
+
+        function confirmarEliminarServicio() {
+            if (servicioIdEliminar !== null) {
+                const form = document.getElementById("formEliminarServicio");
+                const action = `/remove-servicio/${servicioIdEliminar}`;
+                form.setAttribute("action", action);
+                form.submit();
+            }
+        }
+    </script>
+
+<script>
         window.addEventListener("DOMContentLoaded", () => {
             const modales = [
-                "servicioAgregado",
-                "servicioEditado", 
-                "servicioEliminado",
-                "errorEliminacion"
+                "modalServicioAgregado",
+                "modalServicioEditado",
+                "modalServicioEliminado",
+                "modalErrorEliminacionServicio",
+                "modalErrorServicio"
             ];
 
-            modales.forEach(modalCondition => {
-                const modal = document.querySelector(`[th\\:if="${modalCondition}"]`);
+            modales.forEach(id => {
+                const modal = document.getElementById(id);
                 if (modal) {
+                    // Mostrar el modal si existe
+                    modal.classList.remove("hidden");
+                    modal.classList.add("flex");
+
+                    // Cierre automático después de 4 segundos
                     setTimeout(() => {
-                        modal.classList.add('hidden');
+                        modal.classList.add("hidden");
+                        modal.classList.remove("flex");
                     }, 4000);
                 }
             });

@@ -56,10 +56,13 @@ public class HorarioController {
             model.addAttribute("horario", horarioService.getHorario(id));
             model.addAttribute("barberoList", barberoService.getAll());
             model.addAttribute("type", "E");
+            model.addAttribute("pageTitle", "Horarios");
+            model.addAttribute("pageSubtitle", "Editar Horario");
+            model.addAttribute("content", "horarios/horario");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "horarios/horario";
+        return "layouts/main-layout";
     }
 
     @GetMapping("/view-horario/{id}")
@@ -68,10 +71,14 @@ public class HorarioController {
             model.addAttribute("horario", horarioService.getHorario(id));
             model.addAttribute("barberoList", barberoService.getAll());
             model.addAttribute("type", "V");
+            model.addAttribute("pageTitle", "Horarios");
+            model.addAttribute("pageSubtitle", "Ver Horario");
+            model.addAttribute("content", "horarios/horario");
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "horarios/horario";
+        return "layouts/main-layout";
     }
 
     @GetMapping("/remove-horario/{id}")
@@ -100,13 +107,6 @@ public class HorarioController {
         return "redirect:/horarios";
     }
 
-    /*public String showConsultaHorarios(Model model) {
-        model.addAttribute("barbero", new Barbero());
-        model.addAttribute("barberoList", barberoService.getAll());
-        model.addAttribute("horarios", null);
-        return "consultas/consulta-horarios-barbero";
-    }*/
-    
     @GetMapping("/horarios-barberos")
     public String showConsultaHorarios(Model model) {
         model.addAttribute("barbero", new Barbero());
@@ -118,14 +118,8 @@ public class HorarioController {
         return "layouts/main-layout";
     }
 
-   /* @PostMapping("/consulta-horarios-barbero")
-    public String procesarConsultaHorarios(@ModelAttribute Barbero barbero, Model model) {
-        model.addAttribute("barbero", barbero);
-        model.addAttribute("barberoList", barberoService.getAll());
-        model.addAttribute("horarios", horarioService.listarPorBarbero(barbero.getIdBarbero()));
-        return "consultas/consulta-horarios-barbero";
-    }*/
-    @PostMapping("/horarios-barberos")
+
+    @PostMapping("/consulta-horarios-barbero")
     public String procesarConsultaHorarios(@ModelAttribute Barbero barbero, Model model) {
         model.addAttribute("barbero", barbero);
         model.addAttribute("barberoList", barberoService.getAll());

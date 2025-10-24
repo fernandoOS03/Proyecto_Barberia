@@ -13,7 +13,7 @@
 						<label for="idBarbero"
 							class="block mb-2 text-sm font-bold text-text-primary/80">Seleccione
 							un Barbero</label> <select id="idBarbero" th:field="*{idBarbero}"
-							class=" text-white w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
+							class=" text-black w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
 							required>
 							<option value="" disabled>-- Seleccione --</option>
 							<option th:each="b : ${barberoList}" th:value="${b.idBarbero}"
@@ -50,23 +50,23 @@
 						<thead class="border-b border-text-primary/20">
 							<tr>
 								<th
-									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Día</th>
+									class="px-4 py-3 text-left-text-primary">Día</th>
 								<th
-									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Hora
+									class="px-4 py-3 text-left-text-primary">Hora
 									Inicio</th>
 								<th
-									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Hora
+									class="px-4 py-3 text-left-text-primary">Hora
 									Fin</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="h : ${horarios}"
 								class="border-b border-background-primary last:border-b-0 hover:bg-background-primary/50 transition-colors">
-								<td class="p-4 align-middle text-text-primary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${h.diaSemana}"></td>
-								<td class="p-4 align-middle text-text-primary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${h.horaInicio}"></td>
-								<td class="p-4 align-middle text-text-primary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${h.horaFin}"></td>
 							</tr>
 						</tbody>

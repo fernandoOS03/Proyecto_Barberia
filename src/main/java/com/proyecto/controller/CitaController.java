@@ -152,7 +152,7 @@ public class CitaController {
 		return "layouts/main-layout";
 	}
 
-	@PostMapping("/historiall-citas")
+	@PostMapping("/consulta-historial-citas")
 	public String procesarConsultaHistorialCitas(@ModelAttribute Cliente cliente, Model model) {
 		model.addAttribute("cliente", cliente);
 		model.addAttribute("clienteList", clienteService.getAll());

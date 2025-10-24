@@ -1,63 +1,53 @@
-
 <div th:fragment="content">
-    <!-- Contenedor del Formulario -->
-    <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="bg-background-secondary p-8 rounded-2xl shadow-2xl w-full max-w-lg">
-            
-            <!-- Título dinámico -->
-            <header class="mb-8 text-center">
-                <h1 class="font-serif text-4xl font-bold text-text-primary" th:if="${type == 'N'}">Registrar Cliente</h1>
-                <h1 class="font-serif text-4xl font-bold text-text-primary" th:if="${type == 'E'}">Editar Cliente</h1>
-                <h1 class="font-serif text-4xl font-bold text-text-primary" th:if="${type == 'V'}">Detalle de Cliente</h1>
+    <div class="flex items-center justify-center p-4">
+        <div class="bg-background-secondary p-6 rounded-lg shadow-sm w-full max-w-md">
+            <header class="mb-6 text-center">
+                <h1 class="font-serif text-3xl font-semibold text-text-primary" th:if="${type == 'N'}">Registrar Cliente</h1>
+                <h1 class="font-serif text-3xl font-semibold text-text-primary" th:if="${type == 'E'}">Editar Cliente</h1>
+                <h1 class="font-serif text-3xl font-semibold text-text-primary" th:if="${type == 'V'}">Detalle de Cliente</h1>
             </header>
-
-            <!-- Formulario -->
-            <form th:action="${type == 'N'} ? @{/clientes/guardar-nuevo} : @{/clientes/guardar-editar}"
-                  th:object="${cliente}" method="post" class="space-y-6">
-
-                <!-- ID -->
+            <form th:action="${type == 'N'} ? @{/clientes/guardar-nuevo} : @{/clientes/guardar-editar}" th:object="${cliente}" method="post" class="space-y-5">
+           
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-text-primary/80">ID</label>
-                    <input type="text" th:field="*{idCliente}" readonly
-                           class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 text-text-primary/60 cursor-not-allowed">
+                    <label for="txtNombre" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Nombre</label>
+                    <input type="text" id="txtNombre" th:field="*{nombreCliente}" th:readonly="${type.equals('V')}" autofocus class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                    <p th:if="${#fields.hasErrors('nombreCliente')}" th:errors="*{nombreCliente}" class="mt-1 text-sm text-red-500"></p>
                 </div>
-
-                <!-- Nombre -->
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-text-primary/80">Nombre</label>
-                    <input type="text" th:field="*{nombreCliente}" th:readonly="${type.equals('V')}"
-                           class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-                           th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                    <label for="txtTelefono" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Teléfono</label>
+                    <input type="text" id="txtTelefono" th:field="*{telefonoCliente}" th:readonly="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                    <p th:if="${#fields.hasErrors('telefonoCliente')}" th:errors="*{telefonoCliente}" class="mt-1 text-sm text-red-500"></p>
                 </div>
-
-                <!-- Teléfono -->
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-text-primary/80">Teléfono</label>
-                    <input type="text" th:field="*{telefonoCliente}" th:readonly="${type.equals('V')}"
-                           class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-                           th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                    <label for="txtEmail" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Email</label>
+                    <input type="email" id="txtEmail" th:field="*{emailCliente}" th:readonly="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                    <p th:if="${#fields.hasErrors('emailCliente')}" th:errors="*{emailCliente}" class="mt-1 text-sm text-red-500"></p>
                 </div>
-
-                <!-- Email -->
-                <div>
-                    <label class="block mb-2 text-sm font-bold text-text-primary/80">Email</label>
-                    <input type="email" th:field="*{emailCliente}" th:readonly="${type.equals('V')}"
-                           class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-                           th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
-                </div>
-
-                <!-- Botones de Acción -->
-                <div class="flex justify-between items-center pt-4">
-                    <button type="submit" th:if="${type != 'V'}"
-                            class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20">
-                        Guardar
-                    </button>
-                    <a th:href="@{/clientes}"
-                       class="py-2.5 px-6 rounded-lg border border-text-primary/30 text-text-primary/80 font-semibold hover:bg-background-primary hover:border-text-primary/60 transition-all flex items-center">
-                        Cancelar
-                    </a>
+                <div class="flex items-center justify-end gap-4 pt-4">
+                    <button type="submit" th:if="${type != 'V'}" class="px-4 py-2 rounded-md bg-brand-accent text-white font-sans font-medium text-sm hover:bg-brand-accent/80 transition-colors">Guardar</button>
+                    <a th:href="@{/clientes}" class="px-4 py-2 rounded-md border border-text-primary/20 text-text-primary font-sans font-medium text-sm hover:bg-background-secondary transition-colors">Cancelar</a>
                 </div>
             </form>
         </div>
     </div>
-</div>
+    <div th:if="${clienteAgregado}" id="modalClienteAgregado" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-green-600 mb-2">Cliente registrado</h2>
+            <p class="text-sm text-text-primary/80">El nuevo cliente fue registrado correctamente.</p>
+            <button onclick="document.getElementById('modalClienteAgregado').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-green-600 text-white font-sans text-sm hover:bg-green-700 transition-colors">Aceptar</button>
+        </div>
+    </div>
+    <div th:if="${clienteEditado}" id="modalClienteEditado" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-blue-600 mb-2">Cliente editado</h2>
+            <p class="text-sm text-text-primary/80">Los datos del cliente fueron actualizados correctamente.</p>
+            <button onclick="document.getElementById('modalClienteEditado').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-blue-600 text-white font-sans text-sm hover:bg-blue-700 transition-colors">Aceptar</button>
+        </div>
+    </div>
+    <div th:if="${errorCliente}" id="modalErrorCliente" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-red-600 mb-2">Error</h2>
+            <p class="text-sm text-text-primary/80" th:text="${errorCliente}"></p>
+            <button onclick="document.getElementById('modalErrorCliente').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-red-600 text-white font-sans text-sm hover:bg-red-700 transition-colors">Aceptar</button>
+        </div>
+    </div>

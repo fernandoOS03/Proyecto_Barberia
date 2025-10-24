@@ -8,11 +8,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.proyecto.entity.Servicio;
+import com.proyecto.repository.PagoRepository;
 import com.proyecto.repository.ServicioRepository;
 
 @Service
 public class ServicioService {
-	
+
 	@Autowired
 	private ServicioRepository servicioRepository;
 	
@@ -57,7 +58,7 @@ public class ServicioService {
         return servicioRepository.save(servicioEdit);
     }
 	
-	public void eliminar(Integer idServicio) throws Exception {
+	/*public void eliminar(Integer idServicio) throws Exception {
 	    // Validar si tiene citas registradas
 	    String sql = "SELECT COUNT(*) FROM cita WHERE id_servicio = ?";
 	    Integer total = jdbcTemplate.queryForObject(sql, Integer.class, idServicio);
@@ -68,7 +69,7 @@ public class ServicioService {
 
 	    // Si no hay citas, eliminar normalmente
 	    servicioRepository.deleteById(idServicio);
-	}
+	}*/
 	
 	public Servicio getServicio(Integer idServicio) throws Exception {
         Optional<Servicio> optServicio = servicioRepository.findById(idServicio);
@@ -77,6 +78,11 @@ public class ServicioService {
         }
         return optServicio.get();
     }
+	
+	 
+	public void eliminar(Integer idServicio) {
+	    	servicioRepository.deleteById(idServicio);
+	    }
 	
 	public List<Servicio> getAll() {
         return servicioRepository.findAll();

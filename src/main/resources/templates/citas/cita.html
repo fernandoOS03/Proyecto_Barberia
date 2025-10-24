@@ -1,118 +1,90 @@
-<div thr:fragment="content">
-	<div
-		class="bg-background-secondary p-8 rounded-2xl shadow-2xl w-full max-w-2xl">
-
-		<!-- Título dinámico -->
-		<header class="mb-8 text-center">
-			<h1 class="font-serif text-4xl font-bold text-text-primary"
-				th:if="${type == 'N'}">Registrar Cita</h1>
-			<h1 class="font-serif text-4xl font-bold text-text-primary"
-				th:if="${type == 'E'}">Editar Cita</h1>
-			<h1 class="font-serif text-4xl font-bold text-text-primary"
-				th:if="${type == 'V'}">Detalle de Cita</h1>
-		</header>
-
-		<!-- Formulario -->
-		<form
-			th:action="${type == 'N'} ? @{/save-new-cita} : @{/save-edit-cita}"
-			th:object="${cita}" method="post" class="space-y-6">
-
-			<!-- Código -->
-			<div>
-				<label class="block mb-2 text-sm font-bold text-text-primary/80">Código</label>
-				<input type="text" th:field="*{idCita}" readonly
-					class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 text-text-primary/60 cursor-not-allowed">
-			</div>
-
-			<!-- Cliente -->
-			<div>
-				<label class="block mb-2 text-sm font-bold text-text-primary/80">Cliente</label>
-				<select th:field="*{cliente.idCliente}"
-					th:disabled="${type.equals('V')}"
-					class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-					th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
-					<option value="">-- Seleccione --</option>
-					<option th:each="cli : ${clienteList}" th:value="${cli.idCliente}"
-						th:text="${cli.nombreCliente}"></option>
-				</select>
-			</div>
-
-			<!-- Grid para Servicio y Barbero -->
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-				<div>
-					<label class="block mb-2 text-sm font-bold text-text-primary/80">Servicio</label>
-					<select th:field="*{servicio.idServicio}"
-						th:disabled="${type.equals('V')}"
-						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-						th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
-						<option value="">-- Seleccione --</option>
-						<option th:each="srv : ${servicioList}"
-							th:value="${srv.idServicio}" th:text="${srv.nombreServicio}"></option>
-					</select>
-				</div>
-				<div>
-					<label class="block mb-2 text-sm font-bold text-text-primary/80">Barbero</label>
-					<select th:field="*{barbero.idBarbero}"
-						th:disabled="${type.equals('V')}"
-						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-						th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
-						<option value="">-- Seleccione --</option>
-						<option th:each="bar : ${barberoList}" th:value="${bar.idBarbero}"
-							th:text="${bar.nombreBarbero}"></option>
-					</select>
-				</div>
-			</div>
-
-			<!-- Grid para Fecha y Hora -->
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-				<div>
-					<label class="block mb-2 text-sm font-bold text-text-primary/80">Fecha</label>
-					<input type="date" th:field="*{fecha}"
-						th:readonly="${type.equals('V')}"
-						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-						th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''"
-						required>
-				</div>
-				<div>
-					<label class="block mb-2 text-sm font-bold text-text-primary/80">Hora</label>
-					<input type="time" th:field="*{hora}"
-						th:readonly="${type.equals('V')}"
-						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-						th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''"
-						required>
-				</div>
-			</div>
-
-			<!-- Estado -->
-			<div>
-				<label class="block mb-2 text-sm font-bold text-text-primary/80">Estado</label>
-				<select th:field="*{estado}" th:disabled="${type.equals('V')}"
-					class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-					th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
-					<option th:each="estado : ${estadoList}" th:value="${estado}"
-						th:text="${estado}"></option>
-				</select>
-			</div>
-
-			<!-- Pago -->
-			<div>
-				<label class="block mb-2 text-sm font-bold text-text-primary/80">Pago</label>
-				<select th:field="*{estadoPago}" th:disabled="${type.equals('V')}"
-					class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-					th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
-					<option th:each="estado : ${estadoPagoList}" th:value="${estado}"
-						th:text="${estado}"></option>
-				</select>
-			</div>
-
-			<!-- Botones -->
-			<div class="flex justify-between items-center pt-4">
-				<button type="submit"
-					class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20"
-					th:if="${type != 'V'}">Guardar</button>
-				<a th:href="@{/citas}"
-					class="py-2.5 px-6 rounded-lg border border-text-primary/30 text-text-primary/80 font-semibold hover:bg-background-primary hover:border-text-primary/60 transition-all flex items-center">Cancelar</a>
-			</div>
-		</form>
-	</div>
-</div>
+<div th:fragment="content">
+    <div class="flex items-center justify-center p-4">
+        <div class="bg-background-secondary p-6 rounded-lg shadow-sm w-full max-w-md">
+            <header class="mb-6 text-center">
+                <h1 class="font-serif text-3xl font-semibold text-text-primary" th:if="${type == 'N'}">Registrar Cita</h1>
+                <h1 class="font-serif text-3xl font-semibold text-text-primary" th:if="${type == 'E'}">Editar Cita</h1>
+                <h1 class="font-serif text-3xl font-semibold text-text-primary" th:if="${type == 'V'}">Detalle de Cita</h1>
+            </header>
+            <form th:action="${type == 'N'} ? @{/save-new-cita} : @{/save-edit-cita}" th:object="${cita}" method="post" class="space-y-5">
+          
+                <div>
+                    <label for="idCliente" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Cliente</label>
+                    <select id="idCliente" th:field="*{cliente.idCliente}" th:disabled="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                        <option value="">-- Seleccione --</option>
+                        <option th:each="cli : ${clienteList}" th:value="${cli.idCliente}" th:text="${cli.nombreCliente}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('cliente.idCliente')}" th:errors="*{cliente.idCliente}" class="mt-1 text-sm text-red-500"></p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="idServicio" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Servicio</label>
+                        <select id="idServicio" th:field="*{servicio.idServicio}" th:disabled="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                            <option value="">-- Seleccione --</option>
+                            <option th:each="srv : ${servicioList}" th:value="${srv.idServicio}" th:text="${srv.nombreServicio}"></option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('servicio.idServicio')}" th:errors="*{servicio.idServicio}" class="mt-1 text-sm text-red-500"></p>
+                    </div>
+                    <div>
+                        <label for="idBarbero" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Barbero</label>
+                        <select id="idBarbero" th:field="*{barbero.idBarbero}" th:disabled="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                            <option value="">-- Seleccione --</option>
+                            <option th:each="bar : ${barberoList}" th:value="${bar.idBarbero}" th:text="${bar.nombreBarbero}"></option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('barbero.idBarbero')}" th:errors="*{barbero.idBarbero}" class="mt-1 text-sm text-red-500"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="fecha" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Fecha</label>
+                        <input type="date" id="fecha" th:field="*{fecha}" th:readonly="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                        <p th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}" class="mt-1 text-sm text-red-500"></p>
+                    </div>
+                    <div>
+                        <label for="hora" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Hora</label>
+                        <input type="time" id="hora" th:field="*{hora}" th:readonly="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                        <p th:if="${#fields.hasErrors('hora')}" th:errors="*{hora}" class="mt-1 text-sm text-red-500"></p>
+                    </div>
+                </div>
+                <div>
+                    <label for="estado" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Estado</label>
+                    <select id="estado" th:field="*{estado}" th:disabled="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                        <option th:each="estado : ${estadoList}" th:value="${estado}" th:text="${estado}" th:classappend="${estado == 'Confirmada'} ? 'bg-green-500-20 text-green-600' : (${estado == 'Pendiente'} ? 'bg-yellow-500-20 text-yellow-600' : 'bg-red-500-20 text-red-600')"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}" class="mt-1 text-sm text-red-500"></p>
+                </div>
+                <div>
+                    <label for="estadoPago" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Estado de Pago</label>
+                    <select id="estadoPago" th:field="*{estadoPago}" th:disabled="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                        <option th:each="estado : ${estadoPagoList}" th:value="${estado}" th:text="${estado}" th:classappend="${estado == 'Pagado'} ? 'bg-green-500-20 text-green-600' : (${estado == 'Pendiente'} ? 'bg-yellow-500-20 text-yellow-600' : 'bg-red-500-20 text-red-600')"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('estadoPago')}" th:errors="*{estadoPago}" class="mt-1 text-sm text-red-500"></p>
+                </div>
+                <div class="flex items-center justify-end gap-4 pt-4">
+                    <button type="submit" th:if="${type != 'V'}" class="px-4 py-2 rounded-md bg-brand-accent text-white font-sans font-medium text-sm hover:bg-brand-accent/80 transition-colors">Guardar</button>
+                    <a th:href="@{/citas}" class="px-4 py-2 rounded-md border border-text-primary/20 text-text-primary font-sans font-medium text-sm hover:bg-background-secondary transition-colors">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:if="${citaAgregada}" id="modalCitaAgregada" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-green-600 mb-2">Cita registrada</h2>
+            <p class="text-sm text-text-primary/80">La nueva cita fue registrada correctamente.</p>
+            <button onclick="document.getElementById('modalCitaAgregada').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-green-600 text-white font-sans text-sm hover:bg-green-700 transition-colors">Aceptar</button>
+        </div>
+    </div>
+    <div th:if="${citaEditada}" id="modalCitaEditada" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-blue-600 mb-2">Cita editada</h2>
+            <p class="text-sm text-text-primary/80">Los datos de la cita fueron actualizados correctamente.</p>
+            <button onclick="document.getElementById('modalCitaEditada').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-blue-600 text-white font-sans text-sm hover:bg-blue-700 transition-colors">Aceptar</button>
+        </div>
+    </div>
+    <div th:if="${errorCita}" id="modalErrorCita" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-red-600 mb-2">Error</h2>
+            <p class="text-sm text-text-primary/80" th:text="${errorCita}"></p>
+            <button onclick="document.getElementById('modalErrorCita').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-red-600 text-white font-sans text-sm hover:bg-red-700 transition-colors">Aceptar</button>
+        </div>
+    </div>

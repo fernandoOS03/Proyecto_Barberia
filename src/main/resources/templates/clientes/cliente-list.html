@@ -1,7 +1,25 @@
 <div th:fragment="content">
 	<!-- Contenedor Principal -->
-	<main class="container mx-auto">
-		<div class="rounded-2xl max-w-7xl mx-auto">
+	<main class="container mx-auto my-8 px-4">
+			<!-- Botones de acción inferiores -->
+			<div class="flex justify-between items-center mb-8">
+				<a th:href="@{/clientes/nuevo}"
+				class="flex items-center px-4 py-2 rounded-md bg-brand-accent text-white font-sans font-medium text-sm hover:bg-brand-accent/80 transition-colors">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+						viewBox="0 0 20 20" fill="currentColor">
+						<path
+							d="M17 9a2 2 0 00-2-2h-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v2H5a2 2 0 00-2 2v2a2 2 0 002 2h2v2a2 2 0 002 2h2a2 2 0 002-2v-2h2a2 2 0 002-2V9z" /></svg>
+					Nuevo Cliente
+				</a> <a th:href="@{/}"
+				class="flex items-center px-4 py-2 rounded-md border border-text-primary/20 text-text-primary font-sans font-medium text-sm hover:bg-background-secondary transition-colors">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+						viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd"
+							d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
+							clip-rule="evenodd" /></svg> Menú Principal
+				</a>
+			</div>
+		<div class="rounded-2xl ">
 
 
 			<!-- Contenedor de la Tabla -->
@@ -12,28 +30,28 @@
 						<thead class="border-b border-text-primary/20">
 							<tr>
 								<th
-									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">ID</th>
+									class="p-4 font-bold text-text-primary">ID</th>
 								<th
-									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Nombre</th>
+									class="p-4 font-bold text-text-primary">Nombre</th>
 								<th
-									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Teléfono</th>
+									class="p-4 font-bold text-text-primary">Teléfono</th>
 								<th
-									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70">Email</th>
+									class="p-4 font-bold text-text-primary">Email</th>
 								<th
-									class="p-4 font-bold text-sm uppercase tracking-wider text-text-primary/70 text-center">Acciones</th>
+									class="p-4 font-bold text-text-primary text-center">Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
 							<!-- Bucle de Thymeleaf para cada cliente -->
 							<tr th:each="cliente : ${clienteList}"
 								class="border-b border-background-primary last:border-b-0 hover:bg-background-primary/50 transition-colors">
-								<td class="p-4 align-middle text-text-primary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${cliente.idCliente}"></td>
-								<td class="p-4 font-semibold align-middle text-text-primary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${cliente.nombreCliente}"></td>
-								<td class="p-4 align-middle text-text-primary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${cliente.telefonoCliente}"></td>
-								<td class="p-4 align-middle text-text-primary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${cliente.emailCliente}"></td>
 								<td
 									class="p-4 text-center space-x-4 whitespace-nowrap align-middle">
@@ -71,24 +89,6 @@
 				</div>
 			</div>
 
-			<!-- Botones de acción inferiores -->
-			<div class="flex justify-between items-center mt-8">
-				<a th:href="@{/clientes/nuevo}"
-					class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
-						viewBox="0 0 20 20" fill="currentColor">
-						<path
-							d="M17 9a2 2 0 00-2-2h-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v2H5a2 2 0 00-2 2v2a2 2 0 002 2h2v2a2 2 0 002 2h2a2 2 0 002-2v-2h2a2 2 0 002-2V9z" /></svg>
-					Nuevo Cliente
-				</a> <a th:href="@{/}"
-					class="py-2.5 px-6 rounded-lg border border-text-primary/30 text-text-primary/80 font-semibold hover:bg-background-secondary hover:border-text-primary/60 transition-all flex items-center">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
-						viewBox="0 0 20 20" fill="currentColor">
-						<path fill-rule="evenodd"
-							d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
-							clip-rule="evenodd" /></svg> Menú Principal
-				</a>
-			</div>
 		</div>
 	</main>
 

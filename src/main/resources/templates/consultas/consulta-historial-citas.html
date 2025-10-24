@@ -30,31 +30,31 @@
 				<div th:if="${citas != null and !citas.isEmpty()}"
 					class="overflow-x-auto">
 					<table
-						class="w-full table-auto bg-background-primary rounded-md shadow-md">
+						class="w-full table-auto bg-background-red rounded-md shadow-md">
 						<thead>
 							<tr class="bg-background-secondary text-text-primary">
-								<th class="px-4 py-3 text-left text-sm font-medium">ID</th>
-								<th class="px-4 py-3 text-left text-sm font-medium">Fecha</th>
-								<th class="px-4 py-3 text-left text-sm font-medium">Hora</th>
-								<th class="px-4 py-3 text-left text-sm font-medium">Barbero</th>
-								<th class="px-4 py-3 text-left text-sm font-medium">Servicio</th>
-								<th class="px-4 py-3 text-left text-sm font-medium">Estado</th>
+								<th class="px-4 py-3 text-left text-text-primary">ID</th>
+								<th class="px-4 py-3 text-left text-text-primary">Fecha</th>
+								<th class="px-4 py-3 text-left text-text-primary">Hora</th>
+								<th class="px-4 py-3 text-left text-text-primary">Barbero</th>
+								<th class="px-4 py-3 text-left text-text-primary">Servicio</th>
+								<th class="px-4 py-3 text-left text-text-primary">Estado</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="c : ${citas}"
 								class="border-b border-brand-accent/20 hover:bg-background-primary/80 transition">
-								<td class="px-4 py-3 text-background-secondary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${c.idCita}"></td>
-								<td class="px-4 py-3 text-background-secondary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${c.fecha}"></td>
-								<td class="px-4 py-3 text-background-secondary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${c.hora}"></td>
-								<td class="px-4 py-3 text-background-secondary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${c.barbero.nombreBarbero}"></td>
-								<td class="px-4 py-3 text-background-secondary"
+								<td class="px-4 py-3 text-text-primary text-sm" 
 									th:text="${c.servicio.nombreServicio}"></td>
-								<td class="px-4 py-3 text-background-secondary"
+								<td class="px-4 py-3 text-text-primary text-sm"
 									th:text="${c.estado}"></td>
 							</tr>
 						</tbody>

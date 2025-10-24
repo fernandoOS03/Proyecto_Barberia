@@ -1,91 +1,73 @@
 <div th:fragment="content">
-	<!-- Contenedor del Formulario -->
-	<div
-		class="bg-background-secondary p-8 rounded-2xl shadow-2xl w-full max-w-lg">
-
-		<!-- Título dinámico -->
-		<header class="mb-8 text-center">
-			<h1 class="font-serif text-4xl font-bold text-text-primary"
-				th:if="${type == 'N'}">Registrar Horario</h1>
-			<h1 class="font-serif text-4xl font-bold text-text-primary"
-				th:if="${type == 'E'}">Editar Horario</h1>
-			<h1 class="font-serif text-4xl font-bold text-text-primary"
-				th:if="${type == 'V'}">Detalle de Horario</h1>
-		</header>
-
-		<!-- Formulario -->
-		<form
-			th:action="${type == 'N'} ? @{/save-new-horario} : @{/save-edit-horario}"
-			th:object="${horario}" method="post" class="space-y-6">
-
-			<!-- Código -->
-			<div>
-				<label class="block mb-2 text-sm font-bold text-text-primary/80">Código</label>
-				<input type="text" th:field="*{idHorario}" readonly
-					class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 text-text-primary/60 cursor-not-allowed">
-			</div>
-
-			<!-- Día -->
-			<div>
-				<label class="block mb-2 text-sm font-bold text-text-primary/80">Día
-					de la Semana</label> <select th:field="*{diaSemana}"
-					th:disabled="${type.equals('V')}"
-					class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-					th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
-					<option
-						th:each="dia : ${T(com.proyecto.entity.DiaSemana).values()}"
-						th:value="${dia}" th:text="${dia}"></option>
-				</select>
-			</div>
-
-			<!-- Grid para Hora Inicio y Hora Fin -->
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-				<div>
-					<label class="block mb-2 text-sm font-bold text-text-primary/80">Hora
-						Inicio</label> <input type="time" th:field="*{horaInicio}"
-						th:readonly="${type.equals('V')}"
-						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-						th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
-				</div>
-				<div>
-					<label class="block mb-2 text-sm font-bold text-text-primary/80">Hora
-						Fin</label> <input type="time" th:field="*{horaFin}"
-						th:readonly="${type.equals('V')}"
-						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-						th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''">
-				</div>
-			</div>
-
-			<!-- Barbero -->
-			<div>
-				<label class="block mb-2 text-sm font-bold text-text-primary/80">Barbero</label>
-				<div th:if="${type.equals('V')}">
-					<input type="text"
-						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 text-text-primary/60 cursor-not-allowed"
-						th:value="${horario.barbero.nombreBarbero}" readonly>
-				</div>
-				<div th:if="${!type.equals('V')}">
-					<select
-						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-						th:field="*{barbero.idBarbero}">
-						<option value="">-- Seleccione --</option>
-						<option th:each="barbero : ${barberoList}"
-							th:value="${barbero.idBarbero}"
-							th:text="${barbero.nombreBarbero}"
-							th:selected="${barbero.idBarbero == horario.barbero.idBarbero}">
-						</option>
-					</select>
-				</div>
-			</div>
-
-			<!-- Botones -->
-			<div class="flex justify-between items-center pt-4">
-				<button type="submit"
-					class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20"
-					th:if="${type != 'V'}">Guardar</button>
-				<a th:href="@{/horarios}"
-					class="py-2.5 px-6 rounded-lg border border-text-primary/30 text-text-primary/80 font-semibold hover:bg-background-primary hover:border-text-primary/60 transition-all flex items-center">Cancelar</a>
-			</div>
-		</form>
-	</div>
-</div>
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-background-secondary p-6 rounded-lg shadow-sm w-full max-w-md">
+            <header class="mb-6 text-center">
+                <h1 class="font-serif text-3xl font-semibold text-text-primary" th:if="${type == 'N'}">Registrar Horario</h1>
+                <h1 class="font-serif text-3xl font-semibold text-text-primary" th:if="${type == 'E'}">Editar Horario</h1>
+                <h1 class="font-serif text-3xl font-semibold text-text-primary" th:if="${type == 'V'}">Detalle de Horario</h1>
+            </header>
+            <form th:action="${type == 'N'} ? @{/save-new-horario} : @{/save-edit-horario}" th:object="${horario}" method="post" class="space-y-5">
+                <div>
+                    <label for="idHorario" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Código</label>
+                    <input type="text" id="idHorario" th:field="*{idHorario}" readonly class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm text-text-primary/60 cursor-not-allowed" required>
+                </div>
+                <div>
+                    <label for="diaSemana" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Día de la Semana</label>
+                    <select id="diaSemana" th:field="*{diaSemana}" th:disabled="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                        <option th:each="dia : ${T(com.proyecto.entity.DiaSemana).values()}" th:value="${dia}" th:text="${dia}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('diaSemana')}" th:errors="*{diaSemana}" class="mt-1 text-sm text-red-500"></p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="horaInicio" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Hora Inicio</label>
+                        <input type="time" id="horaInicio" th:field="*{horaInicio}" th:readonly="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                        <p th:if="${#fields.hasErrors('horaInicio')}" th:errors="*{horaInicio}" class="mt-1 text-sm text-red-500"></p>
+                    </div>
+                    <div>
+                        <label for="horaFin" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Hora Fin</label>
+                        <input type="time" id="horaFin" th:field="*{horaFin}" th:readonly="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                        <p th:if="${#fields.hasErrors('horaFin')}" th:errors="*{horaFin}" class="mt-1 text-sm text-red-500"></p>
+                    </div>
+                </div>
+                <div>
+                    <label for="idBarbero" class="block mb-1 text-sm font-sans font-medium text-text-primary/80">Barbero</label>
+                    <div th:if="${type.equals('V')}">
+                        <input type="text" th:value="${horario.barbero?.nombreBarbero}" readonly class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm text-text-primary/60 cursor-not-allowed">
+                    </div>
+                    <div th:if="${!type.equals('V')}">
+                        <select id="idBarbero" th:field="*{barbero.idBarbero}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" required>
+                            <option value="">-- Seleccione --</option>
+                            <option th:each="barbero : ${barberoList}" th:value="${barbero.idBarbero}" th:text="${barbero.nombreBarbero}" th:selected="${barbero.idBarbero == horario.barbero?.idBarbero}"></option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('barbero.idBarbero')}" th:errors="*{barbero.idBarbero}" class="mt-1 text-sm text-red-500"></p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-end gap-4 pt-4">
+                    <button type="submit" th:if="${type != 'V'}" class="px-4 py-2 rounded-md bg-brand-accent text-white font-sans font-medium text-sm hover:bg-brand-accent/80 transition-colors">Guardar</button>
+                    <a th:href="@{/horarios}" class="px-4 py-2 rounded-md border border-text-primary/20 text-text-primary font-sans font-medium text-sm hover:bg-background-secondary transition-colors">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:if="${horarioAgregado}" id="modalHorarioAgregado" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-green-600 mb-2">Horario registrado</h2>
+            <p class="text-sm text-text-primary/80">El nuevo horario fue registrado correctamente.</p>
+            <button onclick="document.getElementById('modalHorarioAgregado').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-green-600 text-white font-sans text-sm hover:bg-green-700 transition-colors">Aceptar</button>
+        </div>
+    </div>
+    <div th:if="${horarioEditado}" id="modalHorarioEditado" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-blue-600 mb-2">Horario editado</h2>
+            <p class="text-sm text-text-primary/80">Los datos del horario fueron actualizados correctamente.</p>
+            <button onclick="document.getElementById('modalHorarioEditado').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-blue-600 text-white font-sans text-sm hover:bg-blue-700 transition-colors">Aceptar</button>
+        </div>
+    </div>
+    <div th:if="${errorHorario}" id="modalErrorHorario" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-red-600 mb-2">Error</h2>
+            <p class="text-sm text-text-primary/80" th:text="${errorHorario}"></p>
+            <button onclick="document.getElementById('modalErrorHorario').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-red-600 text-white font-sans text-sm hover:bg-red-700 transition-colors">Aceptar</button>
+        </div>
+    </div>

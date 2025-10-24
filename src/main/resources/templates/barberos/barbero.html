@@ -1,106 +1,72 @@
 <div th:fragment="content">
-	<!-- Contenedor del Formulario -->
-	<div class="min-h-screen flex items-center justify-center p-4">
-		<div
-			class="bg-background-secondary p-8 rounded-2xl shadow-2xl w-full max-w-2xl">
-
-			<!-- Título dinámico -->
-			<header class="mb-8 text-center">
-				<h1 class="font-serif text-4xl font-bold text-text-primary"
-					th:if="${type == 'N'}">Registrar Barbero</h1>
-				<h1 class="font-serif text-4xl font-bold text-text-primary"
-					th:if="${type == 'E'}">Editar Barbero</h1>
-				<h1 class="font-serif text-4xl font-bold text-text-primary"
-					th:if="${type == 'V'}">Detalle de Barbero</h1>
-			</header>
-
-			<!-- Formulario -->
-			<form
-				th:action="${type == 'N'} ? @{/barberos/guardar-nuevo} : @{/barberos/guardar-editar}"
-				th:object="${barbero}" method="post" class="space-y-6">
-
-				<!-- Código -->
-				<div>
-					<label for="txtCodigo"
-						class="block mb-2 text-sm font-bold text-text-primary/80">Código</label>
-					<input type="text" id="txtCodigo" th:field="*{idBarbero}" readonly
-						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 text-text-primary/60 cursor-not-allowed"
-						required>
-				</div>
-
-				<!-- Nombre -->
-				<div>
-					<label for="txtNombre"
-						class="block mb-2 text-sm font-bold text-text-primary/80">Nombre</label>
-					<input type="text" id="txtNombre" th:field="*{nombreBarbero}"
-						th:readonly="${type.equals('V')}" autofocus
-						class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-						th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''"
-						required>
-				</div>
-
-				<!-- Grid para Edad y Email -->
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<div>
-						<label for="txtEdad"
-							class="block mb-2 text-sm font-bold text-text-primary/80">Edad</label>
-						<input type="number" id="txtEdad" th:field="*{edadBarbero}"
-							th:readonly="${type.equals('V')}"
-							class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-							th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''"
-							required>
-					</div>
-					<div>
-						<label for="txtEmail"
-							class="block mb-2 text-sm font-bold text-text-primary/80">Email</label>
-						<input type="email" id="txtEmail" th:field="*{emailBarbero}"
-							th:readonly="${type.equals('V')}"
-							class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-							th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''"
-							required>
-					</div>
-				</div>
-
-				<!-- Grid para Usuario y Contraseña -->
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<div>
-						<label for="txtUsuario"
-							class="block mb-2 text-sm font-bold text-text-primary/80">Usuario</label>
-						<input type="text" id="txtUsuario" th:field="*{usuarioBarbero}"
-							th:readonly="${type.equals('V')}"
-							class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-							th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''"
-							required>
-					</div>
-					<div>
-						<label class="block mb-2 text-sm font-bold text-text-primary/80">Contraseña</label>
-						<!-- Campo de texto para modo 'Ver' -->
-						<div th:if="${type.equals('V')}">
-							<input type="text" id="txtContrasenaVer"
-								th:field="*{contrasenaBarbero}" readonly
-								class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 text-text-primary/60 cursor-not-allowed"
-								required>
-						</div>
-						<!-- Campo de contraseña para modo 'Nuevo' o 'Editar' -->
-						<div th:if="${!type.equals('V')}">
-							<input type="text" id="txtContrasena"
-								th:field="*{contrasenaBarbero}"
-								class="w-full bg-background-primary border border-text-primary/20 rounded-lg py-2.5 px-4 focus:outline-none focus:border-brand-accent transition-colors"
-								required>
-						</div>
-					</div>
-				</div>
-
-				<!-- Botones de Acción -->
-				<div class="flex justify-between items-center pt-4">
-					<button type="submit" th:if="${type != 'V'}"
-						class="py-2.5 px-6 rounded-lg bg-brand-accent text-white font-bold hover:opacity-90 transition-opacity flex items-center shadow-lg shadow-brand-accent/20">
-						Grabar</button>
-					<a th:href="@{/barberos}"
-						class="py-2.5 px-6 rounded-lg border border-text-primary/30 text-text-primary/80 font-semibold hover:bg-background-primary hover:border-text-primary/60 transition-all flex items-center">
-						Cancelar </a>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
+    <div class=" flex items-center justify-center p-4">
+        <div class="bg-background-secondary p-8 rounded-lg shadow-sm w-full max-w-2xl">
+            <header class="mb-8 text-center">
+                <h1 class="font-serif text-4xl font-semibold text-text-primary" th:if="${type == 'N'}">Registrar Barbero</h1>
+                <h1 class="font-serif text-4xl font-semibold text-text-primary" th:if="${type == 'E'}">Editar Barbero</h1>
+                <h1 class="font-serif text-4xl font-semibold text-text-primary" th:if="${type == 'V'}">Detalle de Barbero</h1>
+            </header>
+            <form th:action="${type == 'N'} ? @{/barberos/guardar-nuevo} : @{/barberos/guardar-editar}" th:object="${barbero}" method="post" class="space-y-6">
+        
+                <div>
+                    <label for="txtNombre" class="block mb-2 text-sm font-sans font-medium text-text-primary/80">Nombre</label>
+                    <input type="text" id="txtNombre" th:field="*{nombreBarbero}" th:readonly="${type.equals('V')}" autofocus class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-4 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                    <p th:if="${#fields.hasErrors('nombreBarbero')}" th:errors="*{nombreBarbero}" class="mt-1 text-sm text-red-500"></p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="txtEdad" class="block mb-2 text-sm font-sans font-medium text-text-primary/80">Edad</label>
+                        <input type="number" id="txtEdad" th:field="*{edadBarbero}" th:readonly="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-4 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                        <p th:if="${#fields.hasErrors('edadBarbero')}" th:errors="*{edadBarbero}" class="mt-1 text-sm text-red-500"></p>
+                    </div>
+                    <div>
+                        <label for="txtEmail" class="block mb-2 text-sm font-sans font-medium text-text-primary/80">Email</label>
+                        <input type="email" id="txtEmail" th:field="*{emailBarbero}" th:readonly="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-4 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                        <p th:if="${#fields.hasErrors('emailBarbero')}" th:errors="*{emailBarbero}" class="mt-1 text-sm text-red-500"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="txtUsuario" class="block mb-2 text-sm font-sans font-medium text-text-primary/80">Usuario</label>
+                        <input type="text" id="txtUsuario" th:field="*{usuarioBarbero}" th:readonly="${type.equals('V')}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-4 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" th:classappend="${type.equals('V')} ? 'text-text-primary/60 cursor-not-allowed' : ''" required>
+                        <p th:if="${#fields.hasErrors('usuarioBarbero')}" th:errors="*{usuarioBarbero}" class="mt-1 text-sm text-red-500"></p>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-sans font-medium text-text-primary/80">Contraseña</label>
+                        <div th:if="${type.equals('V')}">
+                            <input type="text" id="txtContrasenaVer" th:field="*{contrasenaBarbero}" readonly class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-4 text-sm text-text-primary/60 cursor-not-allowed" required>
+                        </div>
+                        <div th:if="${!type.equals('V')}">
+                            <input type="password" id="txtContrasena" th:field="*{contrasenaBarbero}" class="w-full bg-background-primary border border-text-primary/20 rounded-md py-2 px-4 text-sm focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent/20 transition-colors" required>
+                            <p th:if="${#fields.hasErrors('contrasenaBarbero')}" th:errors="*{contrasenaBarbero}" class="mt-1 text-sm text-red-500"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-end gap-4 pt-4">
+                    <button type="submit" th:if="${type != 'V'}" class="px-4 py-2 rounded-md bg-brand-accent text-white font-sans font-medium text-sm hover:bg-brand-accent/80 transition-colors">Grabar</button>
+                    <a th:href="@{/barberos}" class="px-4 py-2 rounded-md border border-text-primary/20 text-text-primary font-sans font-medium text-sm hover:bg-background-secondary transition-colors">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:if="${barberoAgregado}" id="modalBarberoAgregado" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-green-600 mb-2">Barbero registrado</h2>
+            <p class="text-sm text-text-primary/80">El nuevo barbero fue registrado correctamente.</p>
+            <button onclick="document.getElementById('modalBarberoAgregado').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-green-600 text-white font-sans text-sm hover:bg-green-700 transition-colors">Aceptar</button>
+        </div>
+    </div>
+    <div th:if="${barberoEditado}" id="modalBarberoEditado" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-blue-600 mb-2">Barbero editado</h2>
+            <p class="text-sm text-text-primary/80">Los datos del barbero fueron actualizados correctamente.</p>
+            <button onclick="document.getElementById('modalBarberoEditado').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-blue-600 text-white font-sans text-sm hover:bg-blue-700 transition-colors">Aceptar</button>
+        </div>
+    </div>
+    <div th:if="${errorBarbero}" id="modalErrorBarbero" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
+        <div class="bg-background-primary p-6 rounded-lg shadow-sm text-center max-w-sm w-full">
+            <h2 class="text-xl font-sans font-semibold text-red-600 mb-2">Error</h2>
+            <p class="text-sm text-text-primary/80" th:text="${errorBarbero}"></p>
+            <button onclick="document.getElementById('modalErrorBarbero').classList.add('hidden')" class="mt-4 px-4 py-2 rounded-md bg-red-600 text-white font-sans text-sm hover:bg-red-700 transition-colors">Aceptar</button>
+        </div>
+    </div>

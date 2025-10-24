@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("pageTitle", "Dashboard");
+        model.addAttribute("pageTitle", "Bienvenido");
         model.addAttribute("pageSubtitle", "Panel de control principal");
-        model.addAttribute("content", "index"); // ← CORRECTO
+        model.addAttribute("content", "index");
         
         return "layouts/main-layout";
     }

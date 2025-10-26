@@ -40,12 +40,9 @@ FROM barberia_db.barbero]]></query>
 		<property name="com.jaspersoft.studio.field.tree.path" value="barbero"/>
 	</field>
 	<background splitType="Stretch"/>
-	<title height="109" splitType="Stretch">
-		<element kind="staticText" uuid="3129e96d-18f8-4630-95e7-a45d13c1e6c1" x="108" y="43" width="434" height="30" fontName="Arial Black" fontSize="19.0" hTextAlign="Center">
+	<title height="39" splitType="Stretch">
+		<element kind="staticText" uuid="3129e96d-18f8-4630-95e7-a45d13c1e6c1" x="60" y="0" width="434" height="30" fontName="Arial Black" fontSize="19.0" hTextAlign="Center">
 			<text><![CDATA[LISTADO DE BARBEROS]]></text>
-		</element>
-		<element kind="image" uuid="a9b7a50a-a2f4-4370-a292-b2efcb77c0d0" x="11" y="0" width="96" height="109">
-			<expression><![CDATA["C:/Users/HP/Downloads/LOGO.png"]]></expression>
 		</element>
 	</title>
 	<pageHeader splitType="Stretch"/>

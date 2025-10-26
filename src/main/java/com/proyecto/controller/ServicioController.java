@@ -137,7 +137,7 @@ public class ServicioController {
     public void servicioReport(HttpServletResponse response) throws SQLException, JRException, IOException {
         Connection cnx = jdbcTemplate.getDataSource().getConnection();
         
-        InputStream jasperStream = this.getClass().getResourceAsStream("/reports/Blank_A4.jasper");
+        InputStream jasperStream = this.getClass().getResourceAsStream("/reports/ListadoServicios.jasper");
         Map<String, Object> params = new HashMap<>();
         JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params,cnx);

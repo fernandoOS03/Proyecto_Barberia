@@ -25,10 +25,10 @@ El sistema tiene como enfoque principal la gestión de citas, donde los colabora
   ![App Screenshot](src/main/resources/static/img/horarios.png)
 
 - Gestionar servicios ofrecidos  
-  ![App Screenshot](src/main/resources/static/img/pagos.png)
+  ![App Screenshot](src/main/resources/static/img/servicios.png)
 
   - Administrar Pagos  
-    ![App Screenshot](src/main/resources/static/img/reportes.png)
+    ![App Screenshot](src/main/resources/static/img/pagos.png)
 
 - Generar reportes y análisis  
   ![App Screenshot](src/main/resources/static/img/reportes.png)

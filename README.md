@@ -27,7 +27,7 @@ El sistema tiene como enfoque principal la gestión de citas, donde los colabora
 - Gestionar servicios ofrecidos  
   ![App Screenshot](src/main/resources/static/img/servicios.png)
 
-  - Administrar Pagos  
+- Administrar Pagos  
     ![App Screenshot](src/main/resources/static/img/pagos.png)
 
 - Generar reportes y análisis  
@@ -68,7 +68,3 @@ El sistema tiene como enfoque principal la gestión de citas, donde los colabora
 ```bash
   ./mvnw spring-boot:run
 ```
-
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)

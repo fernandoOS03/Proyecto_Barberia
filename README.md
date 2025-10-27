@@ -1,3 +1,9 @@
+# URL DEL VIDEO [EXPLICACIÓN]
+
+```bash
+  https://youtu.be/uwW_UYE9cko
+```
+
 # Barber Style
 
 **Barber Style** es una plataforma de gestión diseñada para mejorar la productividad de empresas y profesionales dueños de barberías en su día a día.
@@ -28,7 +34,7 @@ El sistema tiene como enfoque principal la gestión de citas, donde los colabora
   ![App Screenshot](src/main/resources/static/img/servicios.png)
 
 - Administrar Pagos  
-    ![App Screenshot](src/main/resources/static/img/pagos.png)
+   ![App Screenshot](src/main/resources/static/img/pagos.png)
 
 - Generar reportes y análisis  
   ![App Screenshot](src/main/resources/static/img/reportes.png)
